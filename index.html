@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>초코초코</title>
+  <style>
+    :root{
+      --bg:#fdf6e3; --text:#5a4632; --panel:#fffdf5; --panel2:#fff7e1;
+      --line:#d2b48c; --accent:#c89a63; --accent2:#b37840;
+      --muted:#8b5e3c;
+    }
+    body{
+      margin:0;display:flex;align-items:center;justify-content:center;
+      min-height:100vh;background:var(--bg);color:var(--text);
+      font-family:"Malgun Gothic",sans-serif
+    }
+    .wrap{width:900px;max-width:100%;margin:auto}
+    h1,h2{margin:0 0 8px}
+    .btn{appearance:none;border:none;background:var(--accent);color:#fff;
+         font-weight:700;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px}
+    .btn:hover{background:var(--accent2)}
+
+    #start{display:flex;align-items:center;justify-content:center;min-height:70vh;text-align:center}
+    #start .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:100px}
+    #start h1{font-size:28px;color:#6b4f2f}
+    #game{display:none;position:relative}
+
+    header{display:grid;gap:10px;grid-template-columns:repeat(4,1fr);margin-bottom:12px}
+    .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}
+    .stat h3{margin:0;font-size:11px;color:var(--muted)}
+    .stat .val{font-size:14px;line-height:1.4}
+
+    #timeContainer{background:#ddd;border-radius:5px;overflow:hidden;height:14px}
+    #timeBar{background:var(--accent);height:100%;width:100%;transition:width 0.5s linear}
+
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:12px}
+
+    .prod-buttons {display: flex;justify-content: center;gap: 10px;margin-bottom: 10px;}
+
+    #orders{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;justify-items:center}
+    .orderWrapper{display:flex;flex-direction:column;align-items:center;gap:4px;position:relative}
+    .order{width:90px;height:90px;border-radius:50%;background:var(--panel2);
+           border:2px solid var(--line);display:flex;flex-direction:column;
+           align-items:center;justify-content:center;text-align:center;font-size:13px}
+    .order strong{margin-bottom:4px;font-size:14px}
+    .orderBar{width:80%;height:8px;background:#ddd;border-radius:4px;overflow:hidden}
+    .orderBarFill{height:100%;background:var(--accent);width:100%}
+
+    .row-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    #log,#queue{white-space:pre-line;overflow:auto;background:var(--panel2);
+                border:1px solid var(--line);border-radius:8px;padding:6px;margin-top:6px;font-size:13px}
+    #log{height:120px}
+    #queue {display: flex;gap: 20px;justify-content: center; background: transparent;
+            border: none;padding: 0;margin-top: 15px;min-height: 90px;}
+
+    .queue-slot{
+      width:70px;height:70px;border-radius:50%;
+      border:2px dashed var(--line);
+      background:transparent;   
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;position:relative;flex-shrink:0
+    }
+    .queue-slot.active{
+      border:none;color:#fff;font-weight:bold;
+    }
+
+    #materials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;max-width:180px;margin:auto}
+    .mat-cell{height:50px;border:1px solid var(--line);border-radius:6px;
+              display:flex;align-items:center;justify-content:center;background:var(--panel2)}
+    .mat-btn{width:100%;height:100%;border:none;border-radius:6px;background:var(--accent);
+             color:#fff;font-weight:bold;cursor:pointer;font-size:13px}
+    .mat-btn:hover{background:var(--accent2)}
+
+    .coin{position:absolute;width:40px;height:40px;border-radius:50%;background:gold;
+          display:flex;align-items:center;justify-content:center;font-weight:bold;color:#5a4632;
+          left:50%;top:50%;transform:translate(-50%,-50%);z-index:10}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section id="start">
+    <div class="card">
+      <h1>🍫 초코초코</h1>
+      <p>초콜릿 가게</p>
+      <button id="btnStart" class="btn">게임 시작</button>
+      <!-- 간단 튜토리얼 -->
+      <div style="line-height:1.8">
+        <p>🎮 조작 방법</p>
+        <ul style="margin:0;padding-left:20px">
+          <li>재료 획득 : 숫자키 1~9</li>
+          <li>손님 대응 : Q / W / E</li>
+          <li>생산 시작 : A / S / D</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="game">
+    <header>
+      <div class="stat"><h3>코인</h3><div class="val" id="coins">500</div></div>
+      <div class="stat"><h3>원재료</h3><div class="val" id="mats">—</div></div>
+      <div class="stat"><h3>완제품</h3><div class="val" id="prods">—</div></div>
+      <div class="stat"><h3>남은 시간</h3><div id="timeContainer"><div id="timeBar"></div></div></div>
+    </header>
+
+    <section class="card">
+      <h2>주문</h2>
+      <div id="orders"></div>
+    </section>
+
+    <div class="row-2col">
+      <section class="card">
+        <h2>생산</h2>
+        <div class="prod-buttons">
+          <button id="mkChoco" class="btn">초코 생산</button>
+          <button id="mkWhite" class="btn">화이트초코 생산</button>
+          <button id="mkDark" class="btn">다크초코 생산</button>
+        </div>
+        <div id="queue"></div>
+      </section>
+
+      <section class="card">
+        <h2>재료 수집</h2>
+        <div id="materials-grid"></div>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>로그</h2>
+      <div id="log"></div>
+    </section>
+  </section>
+</div>
+
+<script>
+const Product={CHOCO:'CHOCO',WHITE:'WHITE',DARK:'DARK'};
+const Recipes={
+  [Product.CHOCO]:{name:'초코',need:{sugar:1,cocoa:1,milk:1},time:2500,price:60},
+  [Product.WHITE]:{name:'화이트초코',need:{sugar:1,cocoa:1,milk:3},time:2500,price:100},
+  [Product.DARK]:{name:'다크초코',need:{sugar:1,cocoa:3,milk:1},time:2500,price:120}
+};
+const state={
+  inv:{sugar:0,cocoa:0,milk:0,prod:{CHOCO:0,WHITE:0,DARK:0},coins:500},
+  queue:[],orders:[null,null,null],nextOrderId:1,timeLeft:300,
+  timers:{loop:null,mat:null},coinsOnField:[null,null,null],nextSpawn:0,firstSpawned:false
+};
+const el=s=>document.querySelector(s);
+const fmt=n=>new Intl.NumberFormat('ko-KR').format(n);
+
+function log(msg){el('#log').innerHTML+='• '+msg+'<br>';el('#log').scrollTop=99999;}
+function refreshTop(){
+  el('#coins').textContent=fmt(state.inv.coins);
+  el('#mats').innerHTML=`설탕:${state.inv.sugar}<br>우유:${state.inv.milk}<br>코코아:${state.inv.cocoa}`;
+  el('#prods').innerHTML=`초코:${state.inv.prod.CHOCO}<br>화이트:${state.inv.prod.WHITE}<br>다크:${state.inv.prod.DARK}`;
+  const percent=(state.timeLeft/300)*100;el('#timeBar').style.width=percent+'%';
+}
+
+function renderQueue(){
+  const box=el('#queue'); box.innerHTML='';
+  for(let i=0;i<3;i++){
+    const slot=document.createElement('div'); slot.className='queue-slot';
+    if(state.queue[i]){
+      const j=state.queue[i];
+      slot.classList.add('active');
+      const percent=Math.max(0,(j.eta/Recipes[j.type].time)*100);
+      slot.style.background=`conic-gradient(var(--accent) ${percent}%, transparent 0)`;
+      slot.textContent=Recipes[j.type].name;
+    }
+    box.appendChild(slot);
+  }
+}
+
+function renderOrders(){
+  const box=el('#orders');box.innerHTML='';
+  state.orders.forEach((o,idx)=>{
+    if(o){
+      const wrap=document.createElement('div');wrap.className='orderWrapper';
+      const circle=document.createElement('div');circle.className='order';
+      circle.innerHTML=`<strong>${Recipes[o.type].name}</strong><div>${o.qty}개</div>`;
+      const bar=document.createElement('div');bar.className='orderBar';
+      const fill=document.createElement('div');fill.className='orderBarFill';fill.style.width=(o.ttl/30*100)+'%';
+      bar.appendChild(fill);wrap.appendChild(circle);wrap.appendChild(bar);box.appendChild(wrap);
+    }else{
+      const empty=document.createElement('div');empty.className='orderWrapper';
+      empty.innerHTML=`<div class="order" style="border-style:dashed"></div>`;box.appendChild(empty);
+    }
+  });
+  state.coinsOnField.forEach((coin,idx)=>{if(coin){box.children[idx].appendChild(coin);}});
+}
+function refreshAll(){refreshTop();renderQueue();renderOrders();}
+
+
+function initGrid(){const grid=el('#materials-grid');grid.innerHTML='';
+  for(let i=0;i<9;i++){const c=document.createElement('div');c.className='mat-cell';grid.appendChild(c);}}
+function spawnMaterials(){const cells=document.querySelectorAll('#materials-grid .mat-cell');cells.forEach(c=>c.innerHTML='');
+  const howMany=1+Math.floor(Math.random()*5);const idxs=[...Array(9).keys()].sort(()=>Math.random()-0.5).slice(0,howMany);
+  idxs.forEach(i=>{const cell=cells[i];const mats=[['sugar','설탕',5],['cocoa','코코아',15],['milk','우유',10]];
+    const [key,label,cost]=mats[Math.floor(Math.random()*mats.length)];const btn=document.createElement('button');
+    btn.className='mat-btn';btn.textContent=label;
+    btn.onclick=()=>{if(state.inv.coins>=cost){state.inv.coins-=cost;
+    let gain = 1;
+    if(Math.random() < 1/10){gain = 2;log(`🌟! ${label}+2 (코인 -${cost})`);}else{log(`${label}+1 (코인 -${cost})`);}
+    state.inv[key]+=gain;refreshTop();cell.innerHTML='';}else{log(`코인 부족 → ${label} 수집 불가`);}};
+    cell.appendChild(btn);setTimeout(()=>{if(cell.contains(btn))cell.innerHTML='';},1500);});}
+function canCraft(r){return state.inv.sugar>=r.need.sugar&&state.inv.cocoa>=r.need.cocoa&&state.inv.milk>=r.need.milk;}
+function consume(r){state.inv.sugar-=r.need.sugar;state.inv.cocoa-=r.need.cocoa;state.inv.milk-=r.need.milk;}
+function startMake(type){const r=Recipes[type];if(!canCraft(r)){log('재료 부족');return;}if(state.queue.length>=3){log('슬롯 가득');return;}
+  consume(r);refreshTop();log(r.name+' 생산 시작…');state.queue.push({type,eta:r.time});renderQueue();}
+function tickProduction(dt){for(const j of state.queue){j.eta-=dt;}
+  for(let i=state.queue.length-1;i>=0;i--){if(state.queue[i].eta<=0){const done=state.queue.splice(i,1)[0];state.inv.prod[done.type]++;log(Recipes[done.type].name+' 완성!');}}
+  refreshTop();renderQueue();}
+function spawnOrder(){const idx=state.orders.findIndex((o,i)=>!o&&!state.coinsOnField[i]);if(idx===-1)return;
+  const types=Object.values(Product);const type=types[Math.floor(Math.random()*types.length)];const qty=1+Math.floor(Math.random()*3);
+  state.orders[idx]={id:state.nextOrderId++,type,qty,ttl:30};log('새 주문 도착');renderOrders();}
+function tickOrders(){state.orders.forEach((o,idx)=>{if(o){o.ttl--;if(o.ttl<=0)state.orders[idx]=null;}});renderOrders();}
+function deliverOrder(slot){const o=state.orders[slot];if(!o)return;if(state.inv.prod[o.type]<o.qty){log('완제품 부족');return;}
+  state.inv.prod[o.type]-=o.qty;const reward=Recipes[o.type].price*o.qty;state.orders[slot]=null;
+  const coin=document.createElement('div');coin.className='coin';coin.textContent='💰';
+  coin.dataset.value=reward;coin.dataset.slot=slot;state.coinsOnField[slot]=coin;log(`${Recipes[o.type].name} 납품 완료`);refreshAll();}
+function collectCoin(slot){const coin=state.coinsOnField[slot];if(!coin)return;const value=parseInt(coin.dataset.value);
+  state.inv.coins+=value;log(`코인 +${value}`);state.coinsOnField[slot]=null;refreshAll();}
+let last=performance.now(),acc=0;function loop(ts){const dt=ts-last;last=ts;tickProduction(dt);acc+=dt;
+  if(acc>=1000){acc-=1000;state.timeLeft--;tickOrders();
+    if(state.timeLeft<=290){if(!state.firstSpawned){spawnOrder();state.firstSpawned=true;state.nextSpawn=ts+4000;}
+    else if(ts>state.nextSpawn){if(Math.random()<0.5){spawnOrder();state.nextSpawn=ts+4000;}}}}
+  refreshTop();if(state.timeLeft<=0){return;}state.timers.loop=requestAnimationFrame(loop);}
+function startGame(){el('#start').style.display='none';el('#game').style.display='block';initGrid();refreshAll();spawnMaterials();
+  state.timers.mat=setInterval(spawnMaterials,2000);last=performance.now();state.timers.loop=requestAnimationFrame(loop);
+  log('게임 시작!');}
+document.addEventListener('keydown',(e)=>{const map={'7':0,'8':1,'9':2,'4':3,'5':4,'6':5,'1':6,'2':7,'3':8};
+  if(map[e.key]!==undefined){const idx=map[e.key];const cell=document.querySelectorAll('#materials-grid .mat-cell')[idx];
+    if(cell){const btn=cell.querySelector('button');if(btn)btn.click();}}
+  const ordMap={q:0,w:1,e:2};if(ordMap[e.key]!==undefined){if(state.orders[ordMap[e.key]])deliverOrder(ordMap[e.key]);
+  else if(state.coinsOnField[ordMap[e.key]])collectCoin(ordMap[e.key]);}
+  if(e.key==='a')startMake(Product.CHOCO);if(e.key==='s')startMake(Product.WHITE);if(e.key==='d')startMake(Product.DARK);});
+el('#btnStart').onclick=startGame;el('#mkChoco').onclick=()=>startMake(Product.CHOCO);
+el('#mkWhite').onclick=()=>startMake(Product.WHITE);el('#mkDark').onclick=()=>startMake(Product.DARK);
+</script>
+</body>
+</html>
