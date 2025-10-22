@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상담글 답변 전후</title>
+    <style>
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+
+/* 배경/보더 컬러는 boardList에 맞춤 */
+.llx-reply-page{
+  --navy:#000777;
+  background:#f3f5ff;
+  border:1px solid #e2e6ff;
+  display:block;
+  /* 위/아래 동일 padding */
+  padding:48px 0 48px;
+  font-family:"Gooorm Sans","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif;color:#0f172a;
+}
+.llx-card{
+  background:#fff;border:1px solid #e2e6ff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);
+  /* 상단 살짝 띄워서 그림자 효과 보정 */
+  margin-top:4px;
+  /* 위/아래 동일 padding */
+  padding:24px 16px 24px;
+  width:min(1120px,94%);margin-left:auto;margin-right:auto;
+}
+.llx-inner{background:transparent;border:none;border-radius:0;padding:18px}
+.llx-post-title{font-size:20px;font-weight:700;margin:0 0 8px}
+.llx-post-meta{font-size:12px;color:#667085;margin-bottom:12px}
+.llx-post-body{white-space:pre-line;line-height:1.8}
+
+.llx-note{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#eef2ff;border:1px solid #dbe2ff;border-radius:10px;padding:10px 12px;margin-top:14px}
+.llx-left{display:flex;align-items:center;gap:10px}
+.llx-avatar{width:48px;height:48px;border:1px solid #e2e6ff;background:#f4f5f7;display:grid;place-items:center}
+.llx-badge{font-size:12px;border:1px solid #e2e6ff;border-radius:999px;padding:6px 10px;background:#fff}
+.llx-btn{height:36px;padding:0 14px;border-radius:10px;background:var(--navy);color:#fff;border:1px solid var(--navy);font-weight:700;cursor:pointer}
+.llx-btn:hover{background:#001366;border-color:#001366}
+.llx-ghost{background:#fff;color:#111;border:1px solid #e2e6ff}
+
+.llx-toprow{display:flex;justify-content:space-between;align-items:center;width:100%}
+.llx-textarea{width:100%;min-height:160px;border:1.6px solid #e2e6ff;border-radius:10px;padding:12px;outline:none;margin-top:10px}
+.llx-counter{font-size:12px;color:#667085;display:flex;justify-content:flex-end;margin-top:6px}
+.llx-ok{color:#000777;font-weight:700}
+
+.llx-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 14px;border-radius:10px;opacity:0;pointer-events:none;transition:.3s;z-index:9999}
+.llx-toast.llx-show{opacity:1}
+.llx-btn[disabled]{opacity:.5;cursor:not-allowed}
+.llx-hidden{display:none}
+
+@media (max-width:768px){
+  .llx-note{flex-direction:column;align-items:stretch}
+}
+</style>
+</head>
+<body>
+<main class="llx-reply-page">
+  <section class="llx-card" aria-labelledby="llx-title">
+    <div class="llx-inner">
+      <h1 id="llx-title" class="llx-post-title">정보통신망법 침입 및 명예훼손 대응방법</h1>
+      <div class="llx-post-meta">2025-09-29 20:45</div>
+      <div class="llx-post-body">
+애인의 바람으로 인해 순간적인 감정으로 때문에 애인이 전에
+제 노트북을 사용하면서 남겨둔 네이버 로그인 정보를 이용하여
+접속 및 애인의 회사 직용 어플에 무단 접속하여 애인의 바람 상대와
+애인이 사귄다고 메시지를 전송하였습니다...
+      </div>
+
+      <!-- 답변 전 -->
+      <div id="llx-wait" class="llx-note" role="region" aria-live="polite">
+        <div class="llx-left">
+          <div class="llx-avatar" aria-hidden="true">IMG</div>
+          <span class="llx-badge">김현민 변호사님의 답변을 기다리고 있어요.</span>
+        </div>
+        <button id="llx-open" class="llx-btn" aria-controls="llx-reply">답변하기</button>
+      </div>
+
+      <!-- 답변 작성 -->
+      <div id="llx-reply" class="llx-note llx-hidden" role="region" aria-live="polite">
+        <div class="llx-toprow">
+          <div class="llx-left">
+            <div class="llx-avatar" aria-hidden="true">IMG</div>
+            <span class="llx-badge">작성 중</span>
+          </div>
+          <div class="llx-actions">
+            <button id="llx-submit" class="llx-btn" disabled>등록</button>
+            <button id="llx-cancel" class="llx-btn llx-ghost">취소</button>
+          </div>
+        </div>
+        <textarea id="llx-ta" class="llx-textarea" placeholder="이렇게 이렇게 해보세요 ..." minlength="20"></textarea>
+        <div class="llx-counter"><span id="llx-count">0</span> / <span id="llx-min">20</span>자 <span id="llx-ok" class="llx-ok llx-hidden">가능</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="llx-toast" class="llx-toast" role="status" aria-live="polite">등록되었습니다.</div>
+</main>
+</style>
+
+<script>
+(function(){
+  const wait = document.getElementById('llx-wait');
+  const reply = document.getElementById('llx-reply');
+  const openBtn = document.getElementById('llx-open');
+  const cancelBtn = document.getElementById('llx-cancel');
+  const submitBtn = document.getElementById('llx-submit');
+  const ta = document.getElementById('llx-ta');
+  const cnt = document.getElementById('llx-count');
+  const min = document.getElementById('llx-min');
+  const ok = document.getElementById('llx-ok');
+  const toast = document.getElementById('llx-toast');
+  const MIN = parseInt(min.textContent,10) || 20;
+
+  function openEditor(){
+    wait.classList.add('llx-hidden');
+    reply.classList.remove('llx-hidden');
+    ta.focus();
+  }
+  function closeEditor(){
+    reply.classList.add('llx-hidden');
+    wait.classList.remove('llx-hidden');
+    ta.value = '';
+    updateCounter();
+  }
+  function updateCounter(){
+    const len = ta.value.trim().length;
+    cnt.textContent = len;
+    const good = len >= MIN;
+    submitBtn.disabled = !good;
+    ok.classList.toggle('llx-hidden', !good);
+  }
+  function showToast(msg){
+    toast.textContent = msg || '등록되었습니다.';
+    toast.classList.add('llx-show');
+    setTimeout(()=>toast.classList.remove('llx-show'), 1600);
+  }
+
+  openBtn.addEventListener('click', openEditor);
+  cancelBtn?.addEventListener('click', closeEditor);
+  ta.addEventListener('input', updateCounter);
+  ta.addEventListener('keydown', (e)=>{
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+      if(!submitBtn.disabled) submitBtn.click();
+    }
+    if (e.key === 'Escape'){closeEditor();}
+  });
+  submitBtn.addEventListener('click', ()=>{
+    showToast('등록되었습니다.');
+    closeEditor();
+  });
+  updateCounter();
+})();
+</script>
+
+</body>
+</html>
