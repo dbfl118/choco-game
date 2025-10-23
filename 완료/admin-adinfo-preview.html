@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자-광고관리-상세</title>
+<style>
+  @font-face {
+    font-family: 'Gooorm Sans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-400.woff2') format('woff2');
+    font-weight: 400; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Gooorm Sans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-500.woff2') format('woff2');
+    font-weight: 500; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Gooorm Sans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2') format('woff2');
+    font-weight: 700; font-style: normal; font-display: swap;
+  }
+
+  :root{
+    --ink:#0f172a; --muted:#6b7280; --line:#e6e8ee; --panel:#f5f6f8;
+    --navy:#000777; --paper:#ffffff; --radius:12px; --danger:#c1121f;
+  }
+  .page-adinfo, .page-adinfo *{ box-sizing:border-box; font-family:"Gooorm Sans","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif }
+  body{ margin:0; background:var(--paper); color:var(--ink) }
+  .container{ width:min(1080px,94%); margin:28px auto 80px }
+  h1{ color: var(--navy); font-size:22px; margin:4px 0 14px; letter-spacing:-.2px }
+  .ad-card{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:0 1px 2px rgba(0,0,0,.03) }
+
+  .small{ font-size:12px; color:#6b7280 }
+  .input{ height:34px; border:1.6px solid #cfd3dd; border-radius:8px; padding:0 10px; outline:none; background:#fff; font:inherit }
+  .input.full{ width:100% }
+  .input:focus{ border-color:var(--navy); box-shadow:0 0 0 3px rgba(0,7,119,.10) }
+
+  .form-grid{ display:grid; grid-template-columns: 140px 1fr; gap:12px 16px; align-items:center }
+  .form-thumb{ height:160px; background:#e9ecf3; border-radius:10px; display:grid; place-items:center; color:#475569; font-weight:800; position:relative; overflow:hidden }
+  .fileline{ margin-top:6px; display:grid; grid-template-columns: 1fr auto; gap:8px; align-items:center }
+  .fileline .btn{ min-width:84px; white-space:nowrap }
+
+  .btn{ display:inline-flex; align-items:center; justify-content:center; height:32px; padding:0 12px; border:none; border-radius:8px; background:#eceff3; color:#0f172a; font-weight:700; cursor:pointer; text-decoration:none; border:1px solid var(--line); transition:all .15s }
+  .btn:hover{ background:#dce1f5; border-color:#b9c3f0 }
+  .actions-row{ display:flex; gap:8px; justify-content:flex-end; margin-top:16px }
+
+  .file-info{ display:flex; align-items:center; gap:8px; margin-top:6px; color:#475569 }
+  .file-pill{ display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border:1px solid #d7dbe5; border-radius:999px; font-size:12px; background:#f8f9fb }
+  .file-pill .x{ display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:4px; color:var(--danger); font-weight:700; cursor:pointer; transition:background .15s, transform .1s }
+  .file-pill .x:hover{ background:rgba(193,18,31,.1) }
+  .file-pill .x:active{ transform:translateY(1px) }
+
+  @media (max-width:780px){ .form-grid{ grid-template-columns:1fr } }
+</style>
+</head>
+<body>
+<main class="page-adinfo">
+  <div class="container">
+    <h1>광고 관리 상세</h1>
+    <form class="ad-card" action="/admin/ad/update" method="post">
+      <div class="form-grid">
+        <div class="small">신청자</div><div>홍길동 변호사</div>
+        <div class="small">게시일</div><div>2025.10.14</div>
+        <div class="small">게시기간</div><div>14 일</div>
+        <div class="small">조회수</div><div>27회</div>
+
+        <div class="small">이미지</div>
+        <div>
+          <div class="form-thumb" id="thumbBox">이미지</div>
+          <div class="small" style="margin-top:6px">이미지링크/이미지 업로드</div>
+          <div class="fileline">
+            <input class="input full" type="url" id="imgUrl" placeholder="이미지 주소를 입력 (http…)" />
+            <label class="btn" for="imgFile">찾아보기</label>
+            <input id="imgFile" type="file" accept="image/*" style="position:absolute;left:-9999px" />
+          </div>
+
+          <div class="file-info" id="fileInfo">
+            <span class="small">선택된 파일:</span>
+            <span id="fileName" class="file-pill">없음</span>
+          </div>
+        </div>
+
+        <div class="small">링크</div>
+        <div class="fileline">
+          <input class="input full" id="linkInput" value="http://www.soldesk.com/" />
+          <button type="button" class="btn gray" id="previewBtn">미리보기</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button type="submit" class="btn">수정</button>
+        <button type="button" class="btn">삭제</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script>
+function resetImage(){
+  const thumb = document.getElementById('thumbBox');
+  const url = document.getElementById('imgUrl');
+  const file = document.getElementById('imgFile');
+  thumb.style.backgroundImage = '';
+  thumb.style.background = '#e9ecf3';
+  thumb.textContent = '이미지';
+  url.value='';
+  file.value='';
+  const fileInfo = document.getElementById('fileInfo');
+  fileInfo.innerHTML = '<span class="small">선택된 파일:</span> <span id="fileName" class="file-pill">없음</span>';
+}
+
+function setFilePill(name){
+  const fileInfo = document.getElementById('fileInfo');
+  const pill = document.createElement('span');
+  pill.className = 'file-pill';
+  pill.innerHTML = name + ' <span class="x" role="button" aria-label="파일 지우기" title="파일 지우기">×</span>';
+  pill.querySelector('.x').addEventListener('click', resetImage);
+  const label = document.createElement('span');
+  label.className = 'small';
+  label.textContent = '선택된 파일:';
+  fileInfo.innerHTML = '';
+  fileInfo.appendChild(label);
+  fileInfo.appendChild(pill);
+}
+
+document.getElementById('imgUrl')?.addEventListener('change', e=>{
+  const url = e.target.value.trim();
+  if(!url) return;
+  const box = document.getElementById('thumbBox');
+  box.style.backgroundImage = `url("${url}")`;
+  box.style.backgroundSize = 'cover';
+  box.style.backgroundPosition = 'center';
+  box.textContent = '';
+  const fname = url.split('/').pop() || 'URL 이미지';
+  setFilePill(fname);
+});
+
+document.getElementById('imgFile')?.addEventListener('change', e=>{
+  const file = e.target.files?.[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    const box = document.getElementById('thumbBox');
+    box.style.backgroundImage = `url("${ev.target.result}")`;
+    box.style.backgroundSize = 'cover';
+    box.style.backgroundPosition = 'center';
+    box.textContent = '';
+  };
+  reader.readAsDataURL(file);
+  setFilePill(file.name);
+});
+
+document.getElementById('previewBtn')?.addEventListener('click', ()=>{
+  const url = document.getElementById('linkInput').value.trim();
+  if(!url){
+    alert('링크를 입력해주세요.');
+    return;
+  }
+  window.open(url, '_blank');
+});
+</script>
+</body>
+</html>
