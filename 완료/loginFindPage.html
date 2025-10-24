@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LawLex - 아이디/비밀번호 찾기</title>
+  <style>
+    @font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+    @font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+    @font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+
+    :root{--brand:#000777;--ink:#000000;--muted:#6b7280;--bg:#fff;--line:#e5e7eb;--error:#dc2626;}
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{font-family:'Gooorm Sans',system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif;
+      background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6;}
+
+    .page-loginFind{padding:40px 12px 80px;}
+    .section{width:min(720px,92%);margin:0 auto 60px;}
+    .title{font-size:28px;font-weight:700;letter-spacing:-0.02em;text-align:center;margin:0 0 24px;color:var(--brand);}
+
+    .form{width:min(560px,90%);margin:0 auto;display:flex;flex-direction:column;gap:24px;}
+    .field{display:flex;flex-direction:column;gap:0;}
+
+    .inline{display:flex;gap:10px;align-items:stretch;}
+    .flex-1{flex:1;}
+
+    .input{width:100%;height:38px;border:none;border-bottom:1px solid var(--line);background:transparent;padding:12px 0 10px;
+      font-size:16px;outline:none;transition:border-color .15s ease;color:var(--ink);}
+    .input::placeholder{color:var(--muted);}
+    .input:focus{border-bottom-color:var(--brand);}
+    .input.invalid{border-bottom-color:var(--error);}
+
+    .pill,.primary-btn,.modal-close-btn{display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;border-radius:8px;
+      transition:opacity .2s ease,transform .1s ease,box-shadow .15s ease;}
+    .pill{background:var(--ink);color:#fff;font-size:12px;height:38px;padding:0 12px;box-shadow:0 2px 6px rgba(0,0,0,.15);white-space:nowrap;}
+    .pill:hover{opacity:.95;box-shadow:0 3px 10px rgba(0,0,0,.2);}
+    .pill:active{transform:scale(.96);box-shadow:0 1px 3px rgba(0,0,0,.4);}
+    .pill.done{background:#E9F8EE !important;color:#007A33 !important;font-weight:700;box-shadow:none !important;}
+
+    .primary-btn{width:260px;height:50px;margin:8px auto 0;background:var(--ink);color:#fff;font-size:18px;font-weight:700;
+      box-shadow:0 4px 12px rgba(0,0,0,.18);}
+    .primary-btn:hover{opacity:.92;box-shadow:0 6px 16px rgba(0,0,0,.22);}
+    .primary-btn:active{transform:scale(.97);box-shadow:0 2px 6px rgba(0,0,0,.4);}
+    .primary-btn:focus-visible{outline:none;border:1px solid var(--brand);box-shadow:0 0 0 2px rgba(0,7,119,.3);}
+
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9999;}
+    .modal-overlay.active{display:flex;}
+    .modal{background:#fff;border-radius:12px;box-shadow:0 24px 48px rgba(0,0,0,.28);width:90%;max-width:320px;padding:24px 20px 20px;
+      text-align:center;}
+    .modal-message{font-size:16px;line-height:1.5;color:#111;margin-bottom:20px;word-break:keep-all;}
+    .modal-close-btn{width:100%;height:44px;background:var(--ink);color:#fff;font-size:15px;font-weight:600;
+      box-shadow:0 4px 12px rgba(0,0,0,.18);}
+    .modal-close-btn:hover{opacity:.92;box-shadow:0 6px 16px rgba(0,0,0,.22);}
+    .modal-close-btn:active{transform:scale(.97);box-shadow:0 2px 6px rgba(0,0,0,.4);}
+    .modal-close-btn:focus-visible{outline:none;border:1px solid var(--brand);box-shadow:0 0 0 2px rgba(0,7,119,.3);}
+  </style>
+</head>
+<body>
+  <main class="page-loginFind">
+
+    <section class="section">
+      <h1 class="title">아이디찾기</h1>
+      <form class="form" id="formFindId" novalidate>
+        <div class="field">
+          <input class="input" id="idPhone" type="tel" placeholder="전화번호 입력" required>
+        </div>
+        <div class="field">
+          <div class="inline">
+            <input class="input flex-1" id="idCode" type="text" placeholder="인증번호 입력" required>
+            <button class="pill" type="button" id="btnIdCode">인증번호</button>
+          </div>
+        </div>
+        <button class="primary-btn" type="submit" id="btnFindId">아이디 찾기</button>
+      </form>
+    </section>
+
+    <section class="section">
+      <h1 class="title">비밀번호찾기</h1>
+      <form class="form" id="formFindPw" novalidate>
+        <div class="field">
+          <input class="input" id="pwPhone" type="tel" placeholder="전화번호 입력" required>
+        </div>
+        <div class="field">
+          <div class="inline">
+            <input class="input flex-1" id="pwCode" type="text" placeholder="인증번호 입력" required>
+            <button class="pill" type="button" id="btnPwCode">인증번호</button>
+          </div>
+        </div>
+        <div class="field">
+          <input class="input" id="newPw" type="password" placeholder="새로운 비밀번호 입력" minlength="6" required>
+        </div>
+        <div class="field">
+          <input class="input" id="newPw2" type="password" placeholder="비밀번호 확인" minlength="6" required>
+        </div>
+        <button class="primary-btn" type="submit" id="btnPwReset">비밀번호 재설정</button>
+      </form>
+    </section>
+
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <p class="modal-message" id="modalMessage">메시지</p>
+        <button class="modal-close-btn" id="modalCloseBtn">확인</button>
+      </div>
+    </div>
+  </main>
+
+
+  <script>
+    const overlay=document.getElementById('modalOverlay');
+    const modalMessage=document.getElementById('modalMessage');
+    const modalCloseBtn=document.getElementById('modalCloseBtn');
+
+    function openModal(messageText){
+      modalMessage.textContent=messageText;
+      overlay.classList.add('active');
+    }
+    function closeModal(){ overlay.classList.remove('active'); }
+
+    modalCloseBtn.addEventListener('click',closeModal);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) closeModal(); });
+
+    const formFindId=document.getElementById('formFindId');
+    formFindId.addEventListener('submit',(e)=>{
+      e.preventDefault();
+      openModal('찾으시는 아이디는\nasdfasdf 입니다');
+    });
+
+    const formFindPw=document.getElementById('formFindPw');
+    formFindPw.addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const pw1=document.getElementById('newPw').value.trim();
+      const pw2=document.getElementById('newPw2').value.trim();
+      if(!pw1||!pw2){ openModal('비밀번호를 입력해주세요.'); return; }
+      if(pw1!==pw2){ openModal('비밀번호가 일치하지 않습니다.'); return; }
+      openModal('비밀번호가 재설정되었습니다.\n다시 로그인 해주세요.');
+    });
+
+    function toggleVerify(btn){
+      if(btn.classList.contains('done')){
+        btn.textContent='인증번호';
+        btn.classList.remove('done');
+      }else{
+        btn.textContent='인증완료';
+        btn.classList.add('done');
+      }
+    }
+    document.getElementById('btnIdCode').addEventListener('click',function(){ toggleVerify(this); });
+    document.getElementById('btnPwCode').addEventListener('click',function(){ toggleVerify(this); });
+  </script>
+</body>
+</html>
