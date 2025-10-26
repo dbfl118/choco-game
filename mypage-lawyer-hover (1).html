@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>마이페이지 - 변호사</title>
+
+  <style>
+    @font-face{
+      font-family:'Gooorm Sans';
+      src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-400.woff2') format('woff2');
+      font-weight:400; font-style:normal; font-display:swap; }
+    @font-face{
+      font-family:'Gooorm Sans';
+      src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-500.woff2') format('woff2');
+      font-weight:500; font-style:normal; font-display:swap; }
+    @font-face{
+      font-family:'Gooorm Sans';
+      src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2') format('woff2');
+      font-weight:700; font-style:normal; font-display:swap; }
+
+    :root{
+      --navy:#000777;
+      --ink:#0f172a;
+      --muted:#6b7280;
+      --paper:#ffffff;
+      --panel:#f5f6f8;
+      --line:#e6e8ee;
+      --softline:#eef1f5;
+      --hover:#f9faff;
+      --shadow:0 1px 2px rgba(0,0,0,.03);
+
+      --danger:#c1121f;
+      --ok:#0b7d2b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--panel);
+      color:var(--ink);
+      line-height:1.5;
+      font-family:"Gooorm Sans","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif;
+    }
+    .page-mypage-lawyer .container{
+      width:min(1080px,94%);
+      margin:28px auto 80px;
+    }
+    h1{
+      font-size:22px;
+      margin:4px 0 12px;
+      letter-spacing:-.2px;
+      font-weight:700;
+      color:var(--ink);
+    }
+
+    .card,
+    .pane,
+    .list-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      transition:box-shadow .15s ease,border-color .15s ease,background-color .15s ease;
+    }
+    .card:hover,
+    .pane:hover,
+    .list-card:hover{
+      background:var(--hover);
+      border-color:#c9d0ea;
+      box-shadow:0 4px 10px rgba(0,0,0,.06);
+    }
+
+    .card{
+      padding:20px;
+      margin-bottom:16px;
+    }
+    .pane{
+      padding:16px 18px;
+    }
+    .list-card{
+      padding:16px 18px;
+      margin-top:16px;
+    }
+
+    .profile-head{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:flex-start;
+      gap:16px;
+      border-bottom:1px solid var(--softline);
+      padding-bottom:16px;
+      margin-bottom:16px;
+    }
+    .avatar{
+      width:72px;
+      height:96px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#6b7280;
+      font-size:13px;
+      flex:0 0 auto;
+    }
+    .info{
+      flex:1;
+      min-width:200px;
+    }
+    .nickname{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:8px;
+      margin-bottom:4px;
+    }
+    .nickname .name{
+      font-size:18px;
+      font-weight:700;
+      color:var(--ink);
+    }
+    .nickname .tag{
+      font-size:12px;
+      font-weight:700;
+      line-height:1;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#eef2ff;
+      color:var(--navy);
+    }
+
+    .meta-line{
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .meta-line .field{
+      display:flex;
+      flex-wrap:wrap;
+      gap:4px;
+      align-items:center;
+    }
+    .meta-line label{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:500;
+    }
+
+    .actions-top{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex:0 0 auto;
+    }
+    .btn{
+      cursor:pointer;
+      border:none;
+      border-radius:8px;
+      height:34px;
+      padding:0 12px;
+      font-size:13px;
+      font-weight:700;
+      line-height:1;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--navy);
+      color:#fff;
+      transition:background .15s ease;
+    }
+    .btn:hover{background:#001366;}
+    .btn.ghost{
+      background:#eceff3;
+      color:var(--ink);
+      border:1.6px solid var(--line);
+    }
+    .btn.ghost:hover{
+      background:#dce1f5;
+      border-color:#b9c3f0;
+    }
+
+    .split-3col{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));
+      gap:16px;
+    }
+    .pane-title{
+      font-size:15px;
+      font-weight:700;
+      margin:0 0 10px;
+      color:var(--ink);
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      row-gap:6px;
+    }
+    .strong-num{
+      font-weight:700;
+      color:var(--navy);
+    }
+    .subline{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    .pill-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height:28px;
+      padding:0 10px;
+      border-radius:7px;
+      font-size:12px;
+      font-weight:700;
+      line-height:1;
+      cursor:pointer;
+      background:#fff;
+      color:var(--ink);
+      border:1px solid var(--line);
+      text-decoration:none;
+      transition:background-color .12s ease,border-color .12s ease,box-shadow .12s ease;
+    }
+    .pill-btn.primary{
+      background:var(--navy);
+      color:#fff;
+      border:none;
+    }
+    .pill-btn.danger{
+      background:#fff4f4;
+      color:#c1121f;
+      border:1px solid rgba(193,18,31,.3);
+    }
+    .pill-btn:hover{
+      background:var(--hover);
+      border-color:#c9d0ea;
+      box-shadow:0 2px 4px rgba(0,0,0,.05);
+    }
+    .pill-btn.primary:hover{
+      background:#001366;
+      box-shadow:0 3px 6px rgba(0,0,0,.2);
+    }
+
+    .list-title{
+      font-size:15px;
+      font-weight:700;
+      margin:0 0 12px;
+      color:var(--ink);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      row-gap:6px;
+    }
+    .link-more{
+      font-size:12px;
+      font-weight:700;
+      color:var(--navy);
+      text-decoration:none;
+    }
+    .link-more:hover{text-decoration:underline;}
+
+    .item-list{
+      border-top:1px solid var(--softline);
+    }
+    .row-item{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:flex-start;
+      padding:12px 0;
+      border-bottom:1px solid var(--softline);
+      font-size:14px;
+      color:var(--ink);
+      transition:background-color .12s ease,border-color .12s ease;
+      cursor:pointer;
+    }
+    .row-item:hover{
+      background:#f9faff;
+      border-color:#c9d0ea;
+    }
+
+    .row-left{
+      min-width:200px;
+      font-weight:500;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .client-nick{
+      font-weight:700;
+      color:var(--ink);
+      font-size:14px;
+    }
+    .preview{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .row-right{
+      min-width:max-content;
+      text-align:right;
+      font-size:12px;
+      color:var(--muted);
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      align-items:flex-end;
+    }
+    .badge-inline{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      line-height:1;
+      background:#fff4e5;
+      color:#b45309;
+    }
+    .badge-inline.ok{
+      background:#e7f5ec;
+      color:#0b7d2b;
+    }
+
+    .row-main{
+      min-width:200px;
+      font-weight:500;
+    }
+    .row-sub{
+      font-size:12px;
+      color:var(--muted);
+      text-align:right;
+      min-width:max-content;
+    }
+
+    @media(max-width:480px){
+      .row-item{flex-direction:column;gap:6px;}
+      .row-right{align-items:flex-start;text-align:left;}
+      .row-sub{text-align:left;}
+    }
+  </style>
+</head>
+<body>
+  
+
+  <main class="page-mypage-lawyer">
+    <div class="container">
+      <h1>마이페이지</h1>
+
+      <section class="card">
+        <div class="profile-head">
+          <div class="avatar">사진</div>
+
+          <div class="info">
+            <div class="nickname">
+              <div class="name">김변호</div>
+              <div class="tag">변호사</div>
+            </div>
+
+            <div class="meta-line">
+              <div class="field"><label>아이디</label><span>law001</span></div>
+              <div class="field"><label>연락처</label><span>010-0000-0000</span></div>
+              <div class="field"><label>사무실</label><span>서울시 종로구 …</span></div>
+              <div class="field"><label>상담가능</label><span>월수금 10:00~18:00</span></div>
+            </div>
+          </div>
+
+          <div class="actions-top">
+            <button class="btn ghost" type="button">정보수정</button>
+            <button class="btn" type="button">로그아웃</button>
+          </div>
+        </div>
+
+        <div class="split-3col">
+          <div class="pane">
+            <div class="pane-title">
+              <span>현재 랭킹</span>
+              <span class="strong-num">8위</span>
+            </div>
+            <div class="subline">좋아요 27 · 상담완료 14건</div>
+            <div class="pill-row">
+              <a class="pill-btn primary" href="#">랭킹 상세</a>
+              <a class="pill-btn" href="#">좋아요 받은 내역</a>
+            </div>
+          </div>
+
+          <div class="pane">
+            <div class="pane-title">
+              <span>포인트</span>
+              <span class="strong-num">2,450 P</span>
+            </div>
+            <div class="pill-row">
+              <a class="pill-btn primary" href="#">정산/출금</a>
+              <a class="pill-btn" href="#">포인트 내역</a>
+            </div>
+          </div>
+
+          <div class="pane">
+            <div class="pane-title">
+              <span>상담 현황</span>
+              <span class="strong-num">대기 2건</span>
+            </div>
+            <div class="subline">진행중 1건 · 종료 5건</div>
+            <div class="pill-row">
+              <a class="pill-btn primary" href="#">대기중 상담</a>
+              <a class="pill-btn" href="#">진행중 상담</a>
+              <a class="pill-btn" href="#">종료 상담</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="list-card">
+        <div class="list-title">
+          <span>대기중인 상담</span>
+          <a class="link-more" href="#">전체보기</a>
+        </div>
+
+        <div class="item-list">
+          <div class="row-item">
+            <div class="row-left">
+              <div class="client-nick">의뢰인닉네임001</div>
+              <div class="preview">안녕하세요, 급하게 상담 필요합니다…</div>
+            </div>
+            <div class="row-right">
+              <span>2025-10-26 14:21</span>
+              <span class="badge-inline">미응답</span>
+            </div>
+          </div>
+
+          <div class="row-item">
+            <div class="row-left">
+              <div class="client-nick">의뢰인닉네임002</div>
+              <div class="preview">폭행 관련 건으로 고소 진행 중이라…</div>
+            </div>
+            <div class="row-right">
+              <span>2025-10-26 13:10</span>
+              <span class="badge-inline">미응답</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="list-card">
+        <div class="list-title">
+          <span>최근 종료된 상담</span>
+          <a class="link-more" href="#">전체보기</a>
+        </div>
+
+        <div class="item-list">
+          <div class="row-item">
+            <div class="row-left">
+              <div class="client-nick">의뢰인닉네임010</div>
+              <div class="preview">감사합니다. 잘 마무리됐습니다!</div>
+            </div>
+            <div class="row-right">
+              <span>2025-10-25 18:40</span>
+              <span class="badge-inline ok">완료</span>
+            </div>
+          </div>
+
+          <div class="row-item">
+            <div class="row-left">
+              <div class="client-nick">의뢰인닉네임011</div>
+              <div class="preview">위자료 부분에서 도움받았습니다.</div>
+            </div>
+            <div class="row-right">
+              <span>2025-10-25 10:02</span>
+              <span class="badge-inline ok">완료</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="list-card">
+        <div class="list-title">
+          <span>내가 쓴 글</span>
+          <a class="link-more" href="#">전체보기</a>
+        </div>
+
+        <div class="item-list">
+          <div class="row-item">
+            <div class="row-main">형사합의 관련 실무적 체크포인트</div>
+            <div class="row-sub">2025-10-20 · 조회 128</div>
+          </div>
+          <div class="row-item">
+            <div class="row-main">카메라 불법촬영 사건에서 초기에 해야 할 일</div>
+            <div class="row-sub">2025-10-18 · 조회 76</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="list-card">
+        <div class="list-title">
+          <span>내가 쓴 댓글</span>
+          <a class="link-more" href="#">전체보기</a>
+        </div>
+
+        <div class="item-list">
+          <div class="row-item">
+            <div class="row-main">“현재 상황이면 퇴직금 청구 가능성 있습니다.”</div>
+            <div class="row-sub">2025-10-26 12:44</div>
+          </div>
+          <div class="row-item">
+            <div class="row-main">“진단서 확보 먼저 하시고 추가로 연락 주세요.”</div>
+            <div class="row-sub">2025-10-25 09:12</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  
+</body>
+</html>
