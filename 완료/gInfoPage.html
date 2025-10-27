@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -16,7 +16,7 @@
       src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2') format('woff2');
       font-weight:700; font-style:normal; font-display:swap; }
 
-    :root{ --navy:#000777; --ink:#0f172a; --muted:#6b7280; --paper:#ffffff;
+    :root{ --navy:#000777; --ink:#000000; --muted:#6b7280; --paper:#ffffff;
       --panel:#f5f6f8; --line:#e6e8ee; --softline:#eef1f5; --hover:#f9faff;
       --shadow:0 1px 2px rgba(0,0,0,.03); --danger:#c1121f; --ok:#0b7d2b; }
 
@@ -24,66 +24,66 @@
     body{ margin:0; background:var(--panel); color:var(--ink); line-height:1.5;
       font-family:"Gooorm Sans","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif; }
     .page-gInfo .container{ width:min(1080px,94%); margin:28px auto 80px; }
-    h1{ font-size:22px; margin:4px 0 12px; letter-spacing:-.2px; font-weight:700; color:var(--ink); }
+    .page-gInfo h1{ font-size:22px; margin:15px; letter-spacing:-.2px; font-weight:700; color:var(--ink); }
 
-    .card, .pane, .list-card{ background:#fff; border:1px solid var(--line); border-radius:14px;
+    .page-gInfo .card, .pane, .list-card{ background:#fff; border:1px solid var(--line); border-radius:14px;
       box-shadow:var(--shadow); transition:box-shadow .15s ease,border-color .15s ease,background-color .15s ease; }
-    .card:hover, .pane:hover, .list-card:hover{ background:var(--hover); border-color:#c9d0ea; box-shadow:0 4px 10px rgba(0,0,0,.06); }
+    .page-gInfo .card:hover, .list-card:hover{box-shadow:0 4px 10px rgba(0,0,0,.06);}
+    .page-gInfo .pane:hover{ background:var(--hover); border-color:#c9d0ea; }
 
-    .card{ padding:20px; margin-bottom:16px; }
-    .pane{ flex:1; min-width:260px; padding:16px 18px; }
-    .list-card{ padding:16px 18px; margin-top:16px; }
+    .page-gInfo .card{ padding:20px; margin:15px; }
+    .page-gInfo .pane{ padding:15px; }
+    .page-gInfo .list-card{ padding:15px; margin:15px; }
 
-    .profile-head{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:16px;
+    .page-gInfo .profile-head{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:16px;
       border-bottom:1px solid var(--softline); padding-bottom:16px; margin-bottom:16px; }
-    .avatar{ width:72px; height:96px; border:1px solid var(--line); border-radius:10px;
+    .page-gInfo .avatar{ width:72px; height:96px; border:1px solid var(--line); border-radius:10px;
       background:#fff; display:flex; align-items:center; justify-content:center;
       color:#6b7280; font-size:13px; flex:0 0 auto; }
-    .info{ flex:1; min-width:200px; }
-    .nickname{ display:flex; flex-wrap:wrap; align-items:center;
+    .page-gInfo .info{ flex:1; min-width:200px; }
+    .page-gInfo .nickname{ display:flex; flex-wrap:wrap; align-items:center;
       gap:8px; margin-bottom:4px; }
-    .nickname .name{ font-size:18px; font-weight:700; color:var(--ink); }
-    .nickname .tag{ font-size:12px; font-weight:700; line-height:1;
+    .page-gInfo .nickname .name{ font-size:18px; font-weight:700; color:var(--ink); }
+    .page-gInfo .nickname .tag{ font-size:12px; font-weight:700; line-height:1;
       padding:4px 8px; border-radius:999px; background:#e7f5ec; color:var(--ok); }
-    .meta-line{ font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:10px; }
+    .page-gInfo .meta-line{ font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:10px; }
 
-    .actions-top{ display:flex; flex-direction:column; gap:6px; flex:0 0 auto; }
-    .btn{ cursor:pointer; border:none; border-radius:8px; height:34px; padding:0 12px;
+    .page-gInfo .actions-top{ display:flex; flex-direction:column; gap:6px; flex:0 0 auto; }
+    .page-gInfo .btn{ cursor:pointer; border:none; border-radius:8px; height:25px; padding:5px 12px;
       font-size:13px; font-weight:700; line-height:1; display:inline-flex; align-items:center;
       justify-content:center; background:var(--navy); color:#fff; transition:background .15s ease; }
-    .btn:hover{background:#001366;}
-    .btn.ghost{ background:#eceff3; color:var(--ink); border:1.6px solid var(--line); }
-    .btn.ghost:hover{ background:#dce1f5; border-color:#b9c3f0; }
+    .page-gInfo .btn.ghost{ background:#eceff3; color:var(--ink); border:1.6px solid var(--line); }
+    .page-lInfo .btn.ghost:last-of-type{ border: none; color:var(--ink); border:1.6px solid var(--line); }
+    .page-gInfo .btn.ghost:hover{ background:var(--navy); color:var(--paper); }
 
-    .split-2col{ display:flex; flex-wrap:wrap; gap:16px; }
-    .pane-title{ font-size:15px; font-weight:700; margin:0 0 10px; color:var(--ink);
-      display:flex; justify-content:space-between; flex-wrap:wrap; row-gap:6px; }
-    .point-value, .strong-num{ font-weight:700; color:var(--navy); }
-    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .pill-btn{ display:inline-flex; align-items:center; justify-content:center;
-      height:28px; padding:0 10px; border-radius:7px; font-size:12px; font-weight:700;
+    .page-gInfo .split{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .page-lInfo .pane{ display: flex; flex-direction: column; justify-content: space-between; }
+    .page-gInfo .pane-title{ display: flex; flex-direction: column; align-items: center;
+       font-size:15px; font-weight:700; margin:0 0 10px; color:var(--ink); row-gap:6px; }
+    .page-gInfo .strong-num{ font-weight:700; color:var(--navy); font-size: 50px;}
+    .page-gInfo .pill-row{ display:flex; justify-content: flex-end; align-items: flex-end; gap:8px; margin-top:auto; }
+    .page-gInfo .pill-btn{ display:flex; align-items:center; justify-content:center;
+      height:30px; padding:10px 5px; border-radius:7px; font-size:12px; font-weight:700;
       line-height:1; cursor:pointer; background:#fff; color:var(--ink); border:1px solid var(--line);
-      text-decoration:none; transition:background-color .12s ease,border-color .12s ease,box-shadow .12s ease; }
-    .pill-btn.primary{ background:var(--navy); color:#fff; border:none; }
-    .pill-btn:hover{ background:var(--hover); border-color:#c9d0ea; box-shadow:0 2px 4px rgba(0,0,0,.05); }
-    .pill-btn.primary:hover{ background:#001366; box-shadow:0 3px 6px rgba(0,0,0,.2); }
+      text-decoration:none; white-space: nowrap; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    .page-gInfo .pill-btn:hover{ background:var(--navy); color:var(--paper); box-shadow:0 2px 4px rgba(0,0,0,.05); }
 
-    .list-title{ font-size:15px; font-weight:700; margin:0 0 12px; color:var(--ink); display:flex;
+    .page-gInfo .list-title{ font-size:15px; font-weight:700; margin:0 0 12px; color:var(--ink); display:flex;
       align-items:center; justify-content:space-between; flex-wrap:wrap; row-gap:6px; }
-    .link-more{ font-size:12px; font-weight:700; color:var(--navy); text-decoration:none; }
-    .link-more:hover{text-decoration:underline;}
+    .page-gInfo .link-more{ font-size:12px; font-weight:700; color:var(--navy); text-decoration:none; }
+    .page-gInfo .link-more:hover{text-decoration:underline;}
 
-    .item-list{ border-top:1px solid var(--softline); }
-    .row-item{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start;
+    .page-gInfo .item-list{ border-top:1px solid var(--softline); }
+    .page-gInfo .row-item{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start;
       padding:12px 0; border-bottom:1px solid var(--softline); font-size:14px; color:var(--ink);
       transition:background-color .12s ease,border-color .12s ease; cursor:pointer; }
-    .row-item:hover{ background:#f9faff; border-color:#c9d0ea; }
-    .row-main{ min-width:200px; font-weight:500; }
-    .row-sub{ font-size:12px; color:var(--muted); text-align:right; min-width:max-content; }
+    .page-gInfo .row-item:hover{ background:#f9faff; border-color:#c9d0ea; }
+    .page-gInfo .row-main{ min-width:200px; font-weight:500; }
+    .page-gInfo .row-sub{ font-size:12px; color:var(--muted); text-align:right; min-width:max-content; }
 
     @media(max-width:480px){
-      .row-item{flex-direction:column;gap:4px;}
-      .row-sub{text-align:left;} }
+      .page-gInfo .row-item{flex-direction:column;gap:4px;}
+      .page-gInfo .row-sub{text-align:left;} }
   </style>
 </head>
 <body>
@@ -112,18 +112,18 @@
 
           <div class="actions-top">
             <button class="btn ghost" type="button">정보수정</button>
-            <button class="btn" type="button">로그아웃</button>
+            <button class="btn ghost" type="button">로그아웃</button>
           </div>
         </div>
 
-        <div class="split-2col">
+        <div class="split">
           <div class="pane">
             <div class="pane-title">
               <span>포인트</span>
-              <span class="point-value">100 P</span>
+              <span class="strong-num">100 P</span>
             </div>
             <div class="pill-row">
-              <a class="pill-btn primary" href="#">결제하기</a>
+              <a class="pill-btn " href="#">결제하기</a>
               <a class="pill-btn" href="#">결제내역</a>
               <a class="pill-btn" href="#">포인트 사용내역</a>
             </div>
@@ -135,7 +135,7 @@
               <span class="strong-num" style="color:var(--ink)">0건 진행중</span>
             </div>
             <div class="pill-row">
-              <a class="pill-btn primary" href="#">상담 목록</a>
+              <a class="pill-btn " href="#">상담 목록</a>
               <a class="pill-btn" href="#">지난 상담 보기</a>
             </div>
           </div>
@@ -181,6 +181,5 @@
     </div>
   </main>
 
-  
 </body>
 </html>
