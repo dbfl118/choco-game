@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LawLex - 메인 홈페이지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Gowun Dodum', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 메인 배너 섹션 */
+        .main-banner {
+            background: linear-gradient(135deg, #e8eef7 0%, #d4e2f4 100%);
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .banner-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .banner-content {
+            flex: 1;
+        }
+
+        .banner-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .banner-title .highlight {
+            color: #000777;
+        }
+
+        .banner-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .guide-btn-outline {
+            background: #fff;
+            color: #666;
+            border: 1px solid #ddd;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .guide-btn-outline:hover {
+            border-color: #000777;
+            color: #000777;
+        }
+
+        .guide-btn {
+            background: #000777;
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .guide-btn:hover {
+            background: #000555;
+        }
+
+        .banner-icon {
+            width: 200px;
+            height: 200px;
+        }
+
+        .banner-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .banner-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .banner-nav:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .banner-nav.prev {
+            left: 20px;
+        }
+
+        .banner-nav.next {
+            right: 20px;
+        }
+
+        /* 섹션 공통 스타일 */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* 카테고리 안내글 테이블 */
+        .category-table-wrapper {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .category-table thead {
+            background: #f8f9fa;
+        }
+
+        .category-table th {
+            padding: 20px;
+            font-weight: 700;
+            color: #000;
+            font-size: 16px;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .category-table th:first-child {
+            width: 80px;
+        }
+
+        .category-table th:nth-child(2) {
+            width: 150px;
+        }
+
+        .category-table th:last-child {
+            width: 100px;
+        }
+
+        .category-table td {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+
+        .category-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .category-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .category-table .title-cell {
+            text-align: left;
+            color: #333;
+        }
+
+        .category-badge {
+            background: #000777;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* 변호사 카드 섹션 */
+        .lawyer-section {
+            background: #f8f9fa;
+        }
+
+        .lawyer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .lawyer-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .lawyer-card.featured {
+            background: #000777;
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 7, 119, 0.2);
+        }
+
+        .lawyer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .lawyer-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .lawyer-location {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .lawyer-experience {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .lawyer-card.featured .lawyer-experience {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .lawyer-stats {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .lawyer-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .lawyer-stat-item .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .lawyer-card.featured .lawyer-stat-item {
+            color: #fff;
+        }
+
+        .consult-btn {
+            background: #000777;
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .lawyer-card.featured .consult-btn {
+            background: #fff;
+            color: #000777;
+        }
+
+        .consult-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        /* 법률정보 카드 섹션 */
+        .legal-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .legal-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .legal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .legal-card-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            position: relative;
+        }
+
+        .legal-card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #ff4444;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .legal-card-badge.new {
+            background: #000777;
+        }
+
+        .legal-card-content {
+            padding: 20px;
+        }
+
+        .legal-card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .legal-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .legal-card-meta .icon {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* 인기뉴스 섹션 */
+        .news-section {
+            background: #f8f9fa;
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .news-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .news-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .news-tab {
+            background: transparent;
+            border: none;
+            color: #999;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+            transition: all 0.3s;
+        }
+
+        .news-tab.active {
+            color: #000777;
+            font-weight: 700;
+            border-bottom: 2px solid #000777;
+        }
+
+        .news-list {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .news-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .news-item:hover {
+            background: #f8f9fa;
+            padding-left: 10px;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-rank {
+            font-size: 20px;
+            font-weight: 700;
+            color: #000777;
+            min-width: 30px;
+        }
+
+        .news-content {
+            flex: 1;
+            font-size: 15px;
+            color: #333;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .banner-title {
+                font-size: 32px;
+            }
+
+            .banner-icon {
+                display: none;
+            }
+
+            .lawyer-grid,
+            .legal-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lawyer-card.featured {
+                transform: scale(1);
+            }
+
+            .section {
+                padding: 40px 0;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 메인 배너 -->
+    <section class="main-banner">
+        <div class="banner-container">
+            <button class="banner-nav prev" onclick="prevSlide()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M12 4L6 10L12 16" stroke="#000777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <div class="banner-content">
+                <h1 class="banner-title">
+                    바쁜 <span class="highlight">일대차별</span><br>
+                    궁금하다면?
+                </h1>
+                <div class="banner-buttons">
+                    <button class="guide-btn-outline">가이드 시작하기</button>
+                    <button class="guide-btn">법률 상담</button>
+                </div>
+            </div>
+
+            <div class="banner-icon">
+                <svg viewBox="0 0 200 200" fill="none">
+                    <!-- 집 아이콘 -->
+                    <path d="M100 40L40 85V160H80V120H120V160H160V85L100 40Z" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- 사람들 아이콘 -->
+                    <circle cx="140" cy="50" r="8" fill="#000"/>
+                    <circle cx="160" cy="50" r="8" fill="#000"/>
+                    <circle cx="150" cy="40" r="10" fill="#000"/>
+                    <path d="M130 60C130 60 135 70 150 70C165 70 170 60 170 60" stroke="#000" stroke-width="3" fill="none"/>
+                </svg>
+            </div>
+
+            <button class="banner-nav next" onclick="nextSlide()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M8 4L14 10L8 16" stroke="#000777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- 내 글의 카테고리 안내글 -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">내 글의 카테고리 안내글</h2>
+            <div class="category-table-wrapper">
+                <table class="category-table">
+                    <thead>
+                        <tr>
+                            <th>순위</th>
+                            <th>카테고리</th>
+                            <th>제목</th>
+                            <th>조회수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><span class="category-badge">법제처</span></td>
+                            <td class="title-cell">법제처에 대한 내용이 여기에 표시될 예를 준비</td>
+                            <td>1165</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><span class="category-badge">법제처</span></td>
+                            <td class="title-cell">법정의 의미 수립을 통한 법률 책정 방법</td>
+                            <td>1032</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><span class="category-badge">법제처</span></td>
+                            <td class="title-cell">전통도 실무의 면제라 협상</td>
+                            <td>965</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><span class="category-badge">법제처</span></td>
+                            <td class="title-cell">법제 정보금액이 평균단가 높이 받게 직장 부동 받음</td>
+                            <td>823</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><span class="category-badge">법제처</span></td>
+                            <td class="title-cell">여제조를 주택 위주 누적 도로 문제적 범위 변경</td>
+                            <td>706</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 바쁜 상담 가능한 변호사 -->
+    <section class="section lawyer-section">
+        <div class="container">
+            <h2 class="section-title">바쁜 상담 가능한 변호사 ></h2>
+            <div class="lawyer-grid">
+                <!-- 변호사 카드 1 -->
+                <div class="lawyer-card">
+                    <div class="lawyer-location">서울 <span style="font-size: 16px; font-weight: 400;">000 변호사</span></div>
+                    <div class="lawyer-experience">변호사 6년차</div>
+                    <div class="lawyer-stats">
+                        <div class="lawyer-stat-item">
+                            <svg class="icon" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1L10 6H15L11 9L12.5 14L8 11L3.5 14L5 9L1 6H6L8 1Z" fill="#ff4444"/>
+                            </svg>
+                            <span>평점 5</span>
+                        </div>
+                        <div class="lawyer-stat-item">
+                            <svg class="icon" viewBox="0 0 16 16" fill="none">
+                                <rect x="2" y="4" width="12" height="10" stroke="#000777" stroke-width="1.5" fill="none"/>
+                                <path d="M5 2V6M11 2V6" stroke="#000777" stroke-width="1.5"/>
+                            </svg>
+                            <span>상담 0</span>
+                        </div>
+                    </div>
+                    <button class="consult-btn">상담하러가기</button>
+                </div>
+
+                <!-- 변호사 카드 2 (강조) -->
+                <div class="lawyer-card featured">
+                    <div class="lawyer-location">서울 <span style="font-size: 16px; font-weight: 400;">*** 변호사</span></div>
+                    <div class="lawyer-experience">변호사 10년차</div>
+                    <div class="lawyer-stats">
+                        <div class="lawyer-stat-item">
+                            <svg class="icon" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1L10 6H15L11 9L12.5 14L8 11L3.5 14L5 9L1 6H6L8 1Z" fill="#fff"/>
+                            </svg>
+                            <span>평점 5</span>
+                        </div>
+                        <div class="lawyer-stat-item">
+                            <svg class="icon" viewBox="0 0 16 16" fill="none">
+                                <rect x="2" y="4" width="12" height="10" stroke="#fff" stroke-width="1.5" fill="none"/>
+                                <path d="M5 2V6M11 2V6" stroke="#fff" stroke-width="1.5"/>
+                            </svg>
+                            <span>상담 0</span>
+                        </div>
+                    </div>
+                    <button class="consult-btn">상담하러가기</button>
+                </div>
+
+                <!-- 변호사 카드 3 -->
+                <div class="lawyer-card">
+                    <div class="lawyer-location">서울 <span style="font-size: 16px; font-weight: 400;">#### 변호사</span></div>
+                    <div class="lawyer-experience">변호사 9년차</div>
+                    <div class="lawyer-stats">
+                        <div class="lawyer-stat-item">
+                            <svg class="icon" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1L10 6H15L11 9L12.5 14L8 11L3.5 14L5 9L1 6H6L8 1Z" fill="#ff4444"/>
+                            </svg>
+                            <span>평점 5</span>
+                        </div>
+                        <div class="lawyer-stat-item">
+                            <svg class="icon" viewBox="0 0 16 16" fill="none">
+                                <rect x="2" y="4" width="12" height="10" stroke="#000777" stroke-width="1.5" fill="none"/>
+                                <path d="M5 2V6M11 2V6" stroke="#000777" stroke-width="1.5"/>
+                            </svg>
+                            <span>상담 0</span>
+                        </div>
+                    </div>
+                    <button class="consult-btn">상담하러가기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 법이슈던 통합 법률정보 -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">법이슈던 통합 법률정보 ></h2>
+            <div class="legal-info-grid">
+                <!-- 법률정보 카드 1 -->
+                <div class="legal-card">
+                    <div class="legal-card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="legal-card-badge">HOT</div>
+                    </div>
+                    <div class="legal-card-content">
+                        <h3 class="legal-card-title">유언의 법적구조 입법의 도 현황 도 적합성 등</h3>
+                        <div class="legal-card-meta">
+                            <svg class="icon" viewBox="0 0 14 14" fill="none">
+                                <circle cx="7" cy="7" r="6" stroke="#999" stroke-width="1.5" fill="none"/>
+                                <path d="M7 3V7L10 9" stroke="#999" stroke-width="1.5"/>
+                            </svg>
+                            <span>2025.01</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 법률정보 카드 2 -->
+                <div class="legal-card">
+                    <div class="legal-card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="legal-card-badge new">NEW</div>
+                    </div>
+                    <div class="legal-card-content">
+                        <h3 class="legal-card-title">현 복잡한 도시 의무와 국립 법정</h3>
+                        <div class="legal-card-meta">
+                            <svg class="icon" viewBox="0 0 14 14" fill="none">
+                                <circle cx="7" cy="7" r="6" stroke="#999" stroke-width="1.5" fill="none"/>
+                                <path d="M7 3V7L10 9" stroke="#999" stroke-width="1.5"/>
+                            </svg>
+                            <span>2025.01</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 법률정보 카드 3 -->
+                <div class="legal-card">
+                    <div class="legal-card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="legal-card-badge">HOT</div>
+                    </div>
+                    <div class="legal-card-content">
+                        <h3 class="legal-card-title">저작권법 심의 가능범위?</h3>
+                        <div class="legal-card-meta">
+                            <svg class="icon" viewBox="0 0 14 14" fill="none">
+                                <circle cx="7" cy="7" r="6" stroke="#999" stroke-width="1.5" fill="none"/>
+                                <path d="M7 3V7L10 9" stroke="#999" stroke-width="1.5"/>
+                            </svg>
+                            <span>2025.01</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 실시간 인기뉴스 -->
+    <section class="section news-section">
+        <div class="container">
+            <div class="news-header">
+                <h2 class="news-title">실시간 인기뉴스</h2>
+                <div class="news-tabs">
+                    <button class="news-tab active">최신뉴스</button>
+                </div>
+            </div>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-rank">1</div>
+                    <div class="news-content">법정의 직장 내 세부, 상법부터의 보호조치의 관여 여부 등이 존재합니다</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-rank">2</div>
+                    <div class="news-content">"같은 다양성 이해, 서비 발언이"... 명, 소자의, 신규관련 법률명령...</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-rank">3</div>
+                    <div class="news-content">신협법 행정 윤리적 지위에, 이의신청 보도집약 보도 필수...</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-rank">4</div>
+                    <div class="news-content">[리뷰] 남성의 자발 본문처리 "그런 보도건"을 법관의 관여위험 출동</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-rank">5</div>
+                    <div class="news-content">도적형 범위 처벌은 민주영상도, 추 절차적 보도성 도 보호현장 점검</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 배너 슬라이더 기능
+        let currentSlide = 0;
+        const slides = [
+            {
+                title: '바쁜 <span class="highlight">일대차별</span><br>궁금하다면?',
+                button1: '가이드 시작하기',
+                button2: '법률 상담'
+            },
+            {
+                title: '전문 <span class="highlight">변호사</span><br>상담받으세요',
+                button1: '변호사 찾기',
+                button2: '상담 신청'
+            },
+            {
+                title: '법률 <span class="highlight">정보</span><br>확인하세요',
+                button1: '정보 보기',
+                button2: '자세히 알아보기'
+            }
+        ];
+
+        function updateSlide() {
+            const bannerTitle = document.querySelector('.banner-title');
+            const buttons = document.querySelectorAll('.banner-buttons button');
+            
+            bannerTitle.innerHTML = slides[currentSlide].title;
+            buttons[0].textContent = slides[currentSlide].button1;
+            buttons[1].textContent = slides[currentSlide].button2;
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        }
+
+        // 자동 슬라이드 (5초마다)
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+</html>

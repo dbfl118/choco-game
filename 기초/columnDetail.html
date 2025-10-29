@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>칼럼 상세</title>
+<link rel="stylesheet" href="boardAnswer.css">
+<style>
+.page-columnDetail{padding:20px 0 60px}
+.wrap{width:min(860px,94%);margin:0 auto}
+h1{font-size:26px;font-weight:700;margin-bottom:10px;color:var(--navy)}
+.meta{display:flex;justify-content:space-between;font-size:13px;color:#6b7280;margin-bottom:20px}
+.image{width:100%;height:320px;background:#e2e6ff;border-radius:10px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;color:#475569;font-weight:700}
+.content{white-space:pre-line;line-height:1.8;margin-bottom:40px}
+.comment{margin-top:40px}
+.comment h2{font-size:20px;margin-bottom:10px}
+.comment-box{display:flex;gap:8px;margin-bottom:12px}
+.comment-box input{flex:1;height:36px;border:1.6px solid var(--line);border-radius:8px;padding:0 10px}
+.comment-box button{height:36px;padding:0 16px;border-radius:8px;background:var(--navy);color:#fff;font-weight:700;border:none;cursor:pointer}
+.comment-list td{padding:10px;border-bottom:1px solid var(--line);font-size:14px}
+</style></head>
+<body>
+<main class="page-columnDetail">
+<div class="wrap">
+<h1>칼럼 제목</h1>
+<div class="meta"><span>2025-10-29</span><span>조회수 65</span></div>
+<div class="image">대표 이미지</div>
+<div class="content">칼럼 본문 내용이 여기에 들어갑니다.</div>
+<div class="comment">
+<h2>댓글</h2>
+<div class="comment-box"><input type="text" placeholder="댓글을 입력하세요"><button>등록</button></div>
+<table class="comment-list" style="width:100%;border-collapse:collapse"><tbody>
+<tr><td>닉네임</td><td>댓글 내용</td><td>날짜</td></tr>
+</tbody></table>
+</div>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소식 메인</title>
+<link rel="stylesheet" href="boardList.css">
+<style>
+.page-newsMain{padding:20px 0 60px}
+.wrap{width:min(1120px,94%);margin:0 auto}
+.section{margin-bottom:60px}
+h1{font-size:24px;font-weight:700;margin-bottom:16px;color:var(--navy)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:16px}
+.thumb{height:180px;background:#e2e6ff;border-radius:10px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:#475569;font-weight:700}
+.card-title{font-weight:600;margin-bottom:8px}
+.card-desc{font-size:14px;color:#6b7280}
+</style>
+</head>
+<body>
+<main class="page-newsMain">
+  <div class="wrap">
+    <section class="section">
+      <h1>NEWS</h1>
+      <div class="grid3">
+        <div class="card"><div class="thumb">이미지</div><div class="card-title">뉴스 제목</div><div class="card-desc">내용 요약</div></div>
+        <div class="card"><div class="thumb">이미지</div><div class="card-title">뉴스 제목</div><div class="card-desc">내용 요약</div></div>
+        <div class="card"><div class="thumb">이미지</div><div class="card-title">뉴스 제목</div><div class="card-desc">내용 요약</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h1>공지사항</h1>
+      <table style="width:100%;border-collapse:collapse;font-size:14px">
+        <thead><tr><th style="width:100px;text-align:left">번호</th><th style="text-align:left">제목</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>공지사항 제목</td></tr>
+          <tr><td>2</td><td>공지사항 제목</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h1>칼럼</h1>
+      <div class="grid3">
+        <div class="card"><div class="thumb">이미지</div><div class="card-title">칼럼 제목</div><div class="card-desc">칼럼 요약 내용</div></div>
+        <div class="card"><div class="thumb">이미지</div><div class="card-title">칼럼 제목</div><div class="card-desc">칼럼 요약 내용</div></div>
+      </div>
+    </section>
+  </div>
+</main>
+</body>
+</html>

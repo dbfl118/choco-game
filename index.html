@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LawLex홈페이지</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <main class="page-index">
+
+    <section class="hero">
+    <div class="inner">
+        <button class="nav-btn nav-prev" onclick="prevSlide()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M12 4L6 10L12 16" stroke="#000777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        </button>
+
+        <div class="content">
+        <h1 class="ttl-big">바쁜 <span class="hl">일상</span> 속<br/>지금 가장 필요한 답을</h1>
+        <p class="desc">상담은 빠르게, 정보는 정확하게. 분야별 전문 변호사와 믿을 수 있는 법률 정보를 한 곳에서.</p>
+        <div class="actions">
+            <button class="btn btn-outline guest-only">실시간 상담하기</button>
+            <button class="btn btn-outline logged-only">상담 이어서 하기</button>
+            <button class="btn btn-primary">바로 상담받기</button>
+        </div>
+        </div>
+
+        <button class="nav-btn nav-next" onclick="nextSlide()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M8 4L14 10L8 16" stroke="#000777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        </button>
+    </div>
+    </section>
+
+    <section>
+    <div class="wrap">
+        <h2 class="section-ttl"><span class="guest-only">현재 인기 많은 글</span><span class="logged-only">내 관심 카테고리 인기글</span></h2>
+        <div class="list-card">
+        <table class="tbl">
+            <thead>
+            <tr><th>#</th><th>분야</th><th>제목</th><th>조회</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>1</td><td><span class="badge">노동</span></td><td class="cell-title">직장 내 부당지시, 어디까지 거부할 수 있나요?</td><td>1,165</td></tr>
+            <tr><td>2</td><td><span class="badge">형사</span></td><td class="cell-title">허위 사실로 신고하면 무고죄가 되나요?</td><td>1,032</td></tr>
+            <tr><td>3</td><td><span class="badge">가사</span></td><td class="cell-title">위자료랑 양육비는 어떻게 달라요?</td><td>965</td></tr>
+            <tr><td>4</td><td><span class="badge">부동산</span></td><td class="cell-title">전세 보증금 못 돌려준대요. 바로 고소 가능한가요?</td><td>823</td></tr>
+            <tr><td>5</td><td><span class="badge">민사</span></td><td class="cell-title">빌려준 돈 안 갚을 때 내용증명 먼저 보내야 하나요?</td><td>706</td></tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </section>
+
+    <section>
+    <div class="wrap">
+        <h2 class="section-ttl">지금 바로 상담 가능한 변호사</h2>
+        <div class="lawyer-grid">
+
+        <div class="lawyer-card">
+            <div class="lawyer-head">서울<span class="lawyer-name"> 홍길동 변호사</span></div>
+            <div class="lawyer-exp">경력 6년</div>
+            <div class="lawyer-stats">
+            <div class="lawyer-row">
+                <svg class="lawyer-ic" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1L10 6H15L11 9L12.5 14L8 11L3.5 14L5 9L1 6H6L8 1Z" fill="#ff4444"/>
+                </svg><span>평점 5.0</span>
+            </div>
+            <div class="lawyer-row">
+                <svg class="lawyer-ic" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="4" width="12" height="10" stroke="#000777" stroke-width="1.5" fill="none"/>
+                <path d="M5 2V6M11 2V6" stroke="#000777" stroke-width="1.5"/>
+                </svg><span>상담 12회</span>
+            </div>
+            </div>
+            <button class="lawyer-btn">상담 신청</button>
+        </div>
+
+        <div class="lawyer-card featured">
+            <div class="lawyer-head">서울<span class="lawyer-name"> 김민준 변호사</span></div>
+            <div class="lawyer-exp">경력 10년 / 형사·성범죄</div>
+            <div class="lawyer-stats">
+            <div class="lawyer-row">
+                <svg class="lawyer-ic" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1L10 6H15L11 9L12.5 14L8 11L3.5 14L5 9L1 6H6L8 1Z" fill="#fff"/>
+                </svg><span>평점 4.9</span>
+            </div>
+            <div class="lawyer-row">
+                <svg class="lawyer-ic" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="4" width="12" height="10" stroke="#fff" stroke-width="1.5" fill="none"/>
+                <path d="M5 2V6M11 2V6" stroke="#fff" stroke-width="1.5"/>
+                </svg><span>상담 45회</span>
+            </div>
+            </div>
+            <button class="lawyer-btn">상담 신청</button>
+        </div>
+
+        <div class="lawyer-card">
+            <div class="lawyer-head">부산<span class="lawyer-name"> 이서현 변호사</span></div>
+            <div class="lawyer-exp">경력 9년 / 부동산·채권</div>
+            <div class="lawyer-stats">
+            <div class="lawyer-row">
+                <svg class="lawyer-ic" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1L10 6H15L11 9L12.5 14L8 11L3.5 14L5 9L1 6H6L8 1Z" fill="#ff4444"/>
+                </svg><span>평점 5.0</span>
+            </div>
+            <div class="lawyer-row">
+                <svg class="lawyer-ic" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="4" width="12" height="10" stroke="#000777" stroke-width="1.5" fill="none"/>
+                <path d="M5 2V6M11 2V6" stroke="#000777" stroke-width="1.5"/>
+                </svg><span>상담 31회</span>
+            </div>
+            </div>
+            <button class="lawyer-btn">상담 신청</button>
+        </div>
+
+        </div>
+    </div>
+    </section>
+
+    <section class="lawyer-wrap">
+    <div class="wrap">
+        <h2 class="section-ttl">알아두면 좋을 법률정보</h2>
+        <div class="legal-grid">
+
+        <div class="legal-card">
+            <div class="legal-img bg-legal1">
+            <div class="legal-badge">HOT</div>
+            </div>
+            <div class="legal-body">
+            <h3 class="legal-ttl">유언장은 어떻게 써야 효력이 있나요?</h3>
+            <div class="legal-meta">
+                <svg class="legal-ic" viewBox="0 0 14 14" fill="none">
+                <circle cx="7" cy="7" r="6" stroke="#999" stroke-width="1.5" fill="none"/>
+                <path d="M7 3V7L10 9" stroke="#999" stroke-width="1.5"/>
+                </svg><span>2025.01</span>
+            </div>
+            </div>
+        </div>
+
+        <div class="legal-card">
+            <div class="legal-img bg-legal2">
+            <div class="legal-badge new">NEW</div>
+            </div>
+            <div class="legal-body">
+            <h3 class="legal-ttl">스토킹 신고했는데 가해자가 합의하자고 합니다</h3>
+            <div class="legal-meta">
+                <svg class="legal-ic" viewBox="0 0 14 14" fill="none">
+                <circle cx="7" cy="7" r="6" stroke="#999" stroke-width="1.5" fill="none"/>
+                <path d="M7 3V7L10 9" stroke="#999" stroke-width="1.5"/>
+                </svg><span>2025.01</span>
+            </div>
+            </div>
+        </div>
+
+        <div class="legal-card">
+            <div class="legal-img bg-legal3">
+            <div class="legal-badge">HOT</div>
+            </div>
+            <div class="legal-body">
+            <h3 class="legal-ttl">내 사진 마음대로 올리면 초상권 침해인가요?</h3>
+            <div class="legal-meta">
+                <svg class="legal-ic" viewBox="0 0 14 14" fill="none">
+                <circle cx="7" cy="7" r="6" stroke="#999" stroke-width="1.5" fill="none"/>
+                <path d="M7 3V7L10 9" stroke="#999" stroke-width="1.5"/>
+                </svg><span>2025.01</span>
+            </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+    </section>
+
+    <section>
+    <div class="wrap">
+        <div class="news-head">
+        <div class="news-left">
+            <div class="news-tabs">
+            <span class="tab active" data-tab="popular">실시간 인기 뉴스</span>
+            <span class="tab-sep">|</span>
+            <span class="tab" data-tab="latest">최신뉴스</span>
+            </div>
+        </div>
+        </div>
+
+        <div class="news-list" id="news-popular">
+        <div class="news-item"><div class="rank">1</div><div class="text">현직 모델 겸 배우, 범죄조직에 한국 여성 팔아넘겼다</div></div>
+        <div class="news-item"><div class="rank">2</div><div class="text">“성적 대리요구 애써 무시했지만”… 신고하면 벌점 가능?</div></div>
+        <div class="news-item"><div class="rank">3</div><div class="text">미성년자 성착취물 유통 280명 적발… 책임 강화 움직임</div></div>
+        <div class="news-item"><div class="rank">4</div><div class="text">[단독] 남친에 이별 통보하자 “기사 쓸거야” 협박… 첫 기소</div></div>
+        <div class="news-item"><div class="rank">5</div><div class="text">전세 사기로 13억 피해… “숨 쉴 틈 없다” 절규</div></div>
+        </div>
+
+        <div class="news-list" id="news-latest">
+        <div class="news-item"><div class="rank">1</div><div class="text">새 민사소송법 개정안 통과, 전자소송 강화</div></div>
+        <div class="news-item"><div class="rank">2</div><div class="text">노동청, 불법파견 단속 강화 계획 발표</div></div>
+        <div class="news-item"><div class="rank">3</div><div class="text">헌재 “사생활 침해 목적 불법촬영, 징역형 적정”</div></div>
+        <div class="news-item"><div class="rank">4</div><div class="text">지식재산권 침해 대응 강화, 특허법원 조직 확대</div></div>
+        <div class="news-item"><div class="rank">5</div><div class="text">정부 ‘온라인 명예훼손 방지법’ 초안 공개</div></div>
+        </div>
+    </div>
+    </section>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
