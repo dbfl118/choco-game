@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>공지사항 리스트</title>
+  <style>
+  @font-face {
+    font-family: 'Gooorm Sans';
+    src:
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-400.woff2')
+      format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;  }
+
+  @font-face {
+    font-family: 'Gooorm Sans';
+    src:
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-500.woff2')
+      format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;  }
+
+  @font-face {
+    font-family: 'Gooorm Sans';
+    src:
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2')
+      format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;  }
+
+  :root {
+    --ink: #000000;
+    --muted: #6b7280;
+    --line: #e2e6ff;
+    --navy: #000777;
+    --hover: #fafcff;  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;  }
+
+  body {
+    background: #fff;
+    color: var(--ink);
+    font-family: "Gooorm Sans", "Noto Sans KR", system-ui, -apple-system,
+      Segoe UI, Roboto, Apple SD Gothic Neo, sans-serif;
+    line-height: 1.6;  }
+
+  .page-noticeList {
+    width: min(950px, 94%);
+    margin: 100px auto 100px;  }
+
+  .page-noticeList .notice-frame {
+    border-top: 2px solid var(--navy);
+    border-bottom: 2px solid var(--navy);  }
+
+  .page-noticeList .table-head {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    background: #f9faff;
+    color: var(--navy);  }
+
+  .page-noticeList .notice-link {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .page-noticeList .notice-link:hover {
+    background: var(--hover);  }
+
+  .page-noticeList .col-no {
+    width: 120px;
+    padding: 0 10px;
+    font-size: 15px;
+    font-weight: 500;
+    flex-shrink: 0;
+    text-align: left;
+    color: var(--muted);  }
+
+  .page-noticeList .col-title {
+    flex: 1;
+    padding: 0 10px;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--ink);  }
+
+  .page-noticeList .col-date {
+    width: 120px;
+    padding: 0 10px;
+    font-size: 14px;
+    text-align: right;
+    color: var(--muted);
+    flex-shrink: 0;  }
+
+  .page-noticeList .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 40px;
+    font-size: 15px;
+    flex-wrap: wrap;  }
+
+  .page-noticeList .pagination a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    text-decoration: none;
+    color: var(--ink);
+    border: none;
+    background: none;
+    transition: all .2s;
+    cursor: pointer;
+    font-weight: 500;  }
+
+  .page-noticeList .pagination a:hover {
+    color: var(--navy);
+    transform: scale(1.05);  }
+
+  .page-noticeList .pagination a.active {
+    color: var(--navy);
+    transform: scale(1.2);
+    font-weight: 700;  }
+
+  .page-noticeList .pagination .arrow {
+    font-weight: 700;
+    color: var(--navy);  }
+  </style>
+</head>
+<body>
+  <main class="page-noticeList">
+    <section class="notice-frame">
+      <div class="table-head">
+        <div class="col-no">글번호</div>
+        <div class="col-title">제목</div>
+        <div class="col-date">등록일</div>
+      </div>
+
+      <a href="#" class="notice-link">
+        <div class="col-no">20</div>
+        <div class="col-title">[공지] 변호사 회원 기능 업그레이드 안내</div>
+        <div class="col-date">2025-10-29</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">19</div>
+        <div class="col-title">[안내] LawLex 모바일 앱 런칭 예정</div>
+        <div class="col-date">2025-10-25</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">18</div>
+        <div class="col-title">[공지] 정기 점검 안내 (10/31 00:00~03:00)</div>
+        <div class="col-date">2025-10-24</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">17</div>
+        <div class="col-title">[이벤트] 신규가입 시 1,000포인트 지급</div>
+        <div class="col-date">2025-10-20</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">16</div>
+        <div class="col-title">[업데이트] 상담글 검색 기능 개선 안내</div>
+        <div class="col-date">2025-10-18</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">15</div>
+        <div class="col-title">[공지] 서버 안정화 패치 완료 안내</div>
+        <div class="col-date">2025-10-15</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">14</div>
+        <div class="col-title">[안내] 개인정보 처리방침 개정 예정</div>
+        <div class="col-date">2025-10-10</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">13</div>
+        <div class="col-title">[공지] 주말 고객센터 운영시간 변경</div>
+        <div class="col-date">2025-10-08</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">12</div>
+        <div class="col-title">[공지] 접속 지연 관련 긴급 점검 안내</div>
+        <div class="col-date">2025-10-06</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">11</div>
+        <div class="col-title">[공지] 회원 탈퇴 절차 개선 안내</div>
+        <div class="col-date">2025-10-05</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">10</div>
+        <div class="col-title">[공지] 상담 예약 취소 정책 변경</div>
+        <div class="col-date">2025-09-29</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">9</div>
+        <div class="col-title">[업데이트] 변호사 프로필 페이지 개편 완료</div>
+        <div class="col-date">2025-09-26</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">8</div>
+        <div class="col-title">[공지] 법률 뉴스 알림 기능 추가 안내</div>
+        <div class="col-date">2025-09-20</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">7</div>
+        <div class="col-title">[이벤트] 9월 신규 가입자 포인트 이벤트</div>
+        <div class="col-date">2025-09-10</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">6</div>
+        <div class="col-title">[공지] 시스템 점검으로 인한 서비스 일시 중단</div>
+        <div class="col-date">2025-09-07</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">5</div>
+        <div class="col-title">[안내] LawLex 서버 교체 일정 안내</div>
+        <div class="col-date">2025-08-30</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">4</div>
+        <div class="col-title">[공지] 회원 비밀번호 보안 정책 강화</div>
+        <div class="col-date">2025-08-25</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">3</div>
+        <div class="col-title">[공지] AI 상담 기능 베타 오픈</div>
+        <div class="col-date">2025-08-20</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">2</div>
+        <div class="col-title">[안내] 법률 전문 뉴스 섹션 추가</div>
+        <div class="col-date">2025-08-15</div>
+      </a>
+      <a href="#" class="notice-link">
+        <div class="col-no">1</div>
+        <div class="col-title">[공지] LawLex 서비스 오픈 안내</div>
+        <div class="col-date">2025-08-01</div>
+      </a>
+    </section>
+
+    <nav class="pagination" id="pagination"></nav>
+  </main>
+
+  <script>
+  (function(){
+    const perPage = 10;
+    let currentPage = 1;
+    const rows = Array.from(document.querySelectorAll('.page-noticeList .notice-link'));
+    const paginationEl = document.getElementById('pagination');
+
+    function renderPage(page){
+      currentPage = page;
+      const start = (currentPage-1)*perPage;
+      const end = start+perPage;
+      rows.forEach((row,idx)=> row.style.display = (idx>=start && idx<end) ? "flex" : "none");
+      renderPagination();
+    }
+
+    function renderPagination(){
+      const totalPages = Math.ceil(rows.length / perPage);
+      paginationEl.innerHTML = "";
+      const prev = document.createElement('a');
+      prev.textContent = "<";
+      prev.className = "arrow";
+      if(currentPage>1) prev.onclick = e=>{e.preventDefault();renderPage(currentPage-1);}
+      paginationEl.appendChild(prev);
+
+      for(let i=1;i<=totalPages;i++){
+        const btn=document.createElement('a');
+        btn.textContent=i;
+        if(i===currentPage) btn.classList.add('active');
+        btn.onclick=e=>{e.preventDefault();renderPage(i);}
+        paginationEl.appendChild(btn);
+      }
+
+      const next = document.createElement('a');
+      next.textContent = ">";
+      next.className = "arrow";
+      if(currentPage<totalPages) next.onclick = e=>{e.preventDefault();renderPage(currentPage+1);}
+      paginationEl.appendChild(next);
+    }
+
+    renderPage(1);
+  })();
+  </script>
+</body>
+</html>

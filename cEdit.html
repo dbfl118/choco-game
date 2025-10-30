@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>칼럼 수정</title><style>
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+:root{--navy:#000777;--ink:#0f172a;--muted:#667085;--line:#e2e6ff;--soft:#eef2ff;--paper:#ffffff;--media:760px;}
+.page-cEdit *{box-sizing:border-box;margin:0;padding:0;}
+.page-cEdit{background:var(--paper);color:var(--ink);font-family:'Gooorm Sans','Noto Sans KR',system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif;line-height:1.65;}
+.page-cEdit .wrap{width:min(920px,94%);margin:80px auto;}
+.page-cEdit .title{font-size:28px;font-weight:700;letter-spacing:-0.01em;margin:0 0 12px;}
+.page-cEdit .card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow:hidden;}
+.page-cEdit .inner{padding:18px;}
+.page-cEdit .field{display:flex;gap:12px;align-items:center;margin:12px 0;}
+.page-cEdit label{width:100px;font-weight:600;}
+.page-cEdit input[type='text'],.page-cEdit input[type='date']{flex:1;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;outline:none;}
+.page-cEdit input[type='text']:focus,.page-cEdit input[type='date']:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,7,119,.08);}
+.page-cEdit textarea{flex:1;min-height:220px;padding:12px;border:1px solid var(--line);border-radius:10px;resize:none;outline:none;}
+.page-cEdit textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,7,119,.08);}
+.page-cEdit .hero{width:min(var(--media),100%);margin:0 auto 12px;aspect-ratio:4/3;border:1px dashed var(--line);border-radius:10px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:#4b5563;}
+.page-cEdit .btns{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;}
+.page-cEdit .btn{height:42px;padding:0 16px;border-radius:10px;border:1px solid var(--navy);background:var(--navy);color:#fff;font-weight:700;cursor:pointer;transition:transform .08s;}
+.page-cEdit .btn.secondary{background:#fff;color:var(--navy);}
+.page-cEdit .btn:hover{transform:translateY(-1px);}
+.page-cEdit .btn:active{transform:translateY(0);}
+.page-cEdit .msg{display:none;margin-top:10px;font-size:14px;color:#065f46;background:#ecfdf5;border:1px solid #a7f3d0;padding:10px 12px;border-radius:10px;}
+</style></head><body>
+<main class="page-cEdit"><div class="wrap">
+<h1 class="title">칼럼 수정</h1>
+<section class="card"><div class="inner">
+<div class="field"><label for="date">작성일</label><input id="date" type="date" value="2025-10-28"></div>
+<div class="field"><label for="author">저자</label><input id="author" type="text" value="법률 칼럼니스트"></div>
+<div class="field"><label for="title">제목</label><input id="title" type="text" value="디지털 전환 시대, 법은 얼마나 가까워졌나"></div>
+<div class="field"><label for="summary">요약</label><input id="summary" type="text" value="기술의 효율성 뒤에 가려진 접근성의 빈칸을 점검한다."></div>
+<div class="field" style="align-items:flex-start"><label>대표 이미지</label><div class="hero" aria-label="대표 이미지">4:3 (최대 760px)</div></div>
+<div class="field" style="align-items:flex-start"><label for="body">본문</label><textarea id="body">모바일 인증과 전자기록 시스템은 민원 창구의 기다림을 줄였지만, 익숙하지 않은 화면 구성과 용어는 일부 시민에게 장벽이 된다.
+접근성은 기술이 아니라 사람의 문제다. 읽기 쉬운 문장, 오류를 막는 설계, 충분한 안내가 핵심이다.</textarea></div>
+<div class="btns"><button type="button" id="btnSave" class="btn">수정 저장</button><button type="button" id="btnCancel" class="btn secondary">취소</button></div>
+<div id="msg" class="msg">수정이 저장되었습니다. (프론트 미리보기)</div>
+</div></section>
+</div></main>
+<script>
+(function(){
+  const $=s=>document.querySelector(s);
+  const author=$('#author'), title=$('#title'), summary=$('#summary'), body=$('#body'), msg=$('#msg');
+  function ok(){return author.value.trim() && title.value.trim() && summary.value.trim() && body.value.trim().length>=30;}
+  function lock(d){[$('#date'),author,title,summary,body,$('#btnSave'),$('#btnCancel')].forEach(el=>el.disabled=d);}
+  $('#btnSave').addEventListener('click',function(){ if(!ok()){msg.style.display='block';msg.style.color='#b91c1c';msg.textContent='저자, 제목, 요약, 본문(30자↑)을 입력하세요.';return;} msg.style.display='block';msg.style.color='#065f46';msg.textContent='수정이 저장되었습니다. (프론트 미리보기)';lock(true); });
+  $('#btnCancel').addEventListener('click',function(){history.back();});
+})();
+</script></body></html>
