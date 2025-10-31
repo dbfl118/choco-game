@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>칼럼 보기</title>
+<style>
+@font-face {
+  font-family:'Gooorm Sans';
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-400.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face {
+  font-family:'Gooorm Sans';
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-500.woff2') format('woff2');
+  font-weight:500;font-style:normal;font-display:swap;
+}
+@font-face {
+  font-family:'Gooorm Sans';
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2') format('woff2');
+  font-weight:700;font-style:normal;font-display:swap;
+}
+
+:root {
+  --navy:#000777; --ink:#000000; --muted:#6b7280;
+  --line:#e2e6ff; --soft:#f7f8ff; --paper:#ffffff;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Gooorm Sans',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',Roboto,Segoe UI,Arial,sans-serif;
+}
+
+.page-cInfo{
+  display:flex;
+  justify-content:center;
+}
+
+.page-cInfo .wrap{
+  width:min(900px,94%);
+  margin:100px 0;
+  border-top:1px solid var(--navy);
+  border-bottom:1px solid var(--navy);
+  padding:30px 0;
+}
+
+.page-cInfo .wrap > *{margin-left:10px;margin-right:10px;}
+
+.page-cInfo .title{font-size:35px;font-weight:700;margin:0 10px;}
+.page-cInfo .date{font-size:14px;color:var(--muted);margin:0 0 18px;}
+
+.page-cInfo .meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-bottom:24px;
+}
+.page-cInfo .meta .left{
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+}
+.page-cInfo .meta .poto{
+  width:75px;height:100px;
+  border-radius:6px;
+  object-fit:cover;
+  border:1px solid var(--line);
+  background:#fff;
+}
+.page-cInfo .meta .writer{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:4px;}
+.page-cInfo .meta .view{font-size:14px;color:var(--muted);}
+
+.page-cInfo .hero{
+  width:100%;
+  aspect-ratio:16/9;
+  display:block;
+  border-radius:4px;
+  object-fit:cover;
+  margin:0 auto 20px;
+}
+
+.page-cInfo .article{font-size:16px;line-height:1.6;}
+.page-cInfo .article .para{margin:12px 0;}
+
+.page-cInfo .actions{display:flex;gap:10px;justify-content:flex-end;margin:20px 0;}
+.page-cInfo .btn{
+  height:40px;padding:0 14px;border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;color:var(--navy);
+  font-weight:700;cursor:pointer;
+  transition:all 0.2s ease;
+}
+.page-cInfo .btn:hover{background:var(--navy);color:#fff;}
+
+/* 댓글 */
+.page-cInfo .cmt{margin-top:26px;}
+.page-cInfo .cmt .top{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px;}
+.page-cInfo .cmt h3{font-size:18px;font-weight:700;}
+.page-cInfo .cmt .write{background:#f9faff;border:1px solid var(--line);border-radius:12px;padding:12px;}
+.page-cInfo .cmt .write .row{display:flex;gap:10px;align-items:flex-start;}
+.page-cInfo .cmt .textbox{flex:1;height:100px;border:1px solid var(--line);border-radius:12px;padding:10px;resize:none;}
+.page-cInfo .textbox:focus{outline:none;border-color:var(--navy);box-shadow:0 0 4px rgba(0,7,119,0.2);}
+.page-cInfo .cmt .submit{
+  height:38px;padding:0 14px;border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;font-weight:700;cursor:pointer;
+  transition:all 0.2s ease;
+}
+.page-cInfo .cmt .submit:hover{background:var(--navy);color:#fff;}
+.page-cInfo .cmt .list{width:100%;border-collapse:collapse;margin-top:12px;}
+.page-cInfo .cmt .list th,.page-cInfo .cmt .list td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;font-size:15px;}
+
+.page-cInfo .cmt .write{display:none;}
+.page-cInfo .cmt.open .write{display:block;}
+</style>
+</head>
+<body>
+<main class="page-cInfo">
+  <div class="wrap">
+    <h1 class="title">제목</h1>
+    <p class="date">2025-10-31</p>
+
+    <div class="meta">
+      <div class="left">
+        <img class="poto" src="https://placehold.co/150x200?text=%EB%B3%80%ED%98%B8%EC%82%AC" alt="변호사 사진">
+        <p class="writer">홍길동(변호사)</p>
+      </div>
+      <p class="view">조회수 65</p>
+    </div>
+
+    <img class="hero"
+         src="https://placehold.co/1200x720?text=%EC%B9%BC%EB%9F%BC+%EB%8C%80%ED%91%9C+%EC%9D%B4%EB%AF%B8%EC%A7%80"
+         alt="대표이미지">
+
+    <article class="article">
+      <p class="para">
+        하워드 러트닉 미국 상무장관은 30일 “한국이 시장을 100% 완전히 개방하기로 합의했다”고 주장했다.
+        반도체 관세와 관련해서도 “이번 합의의 일부가 아니다”라고 주장해 논란이 일었다.
+        전날 우리 정부의 “농산물 추가 시장 개방은 철저히 방어했다”는 발표와는 다소 차이가 있는 내용이다.
+        러트닉 장관의 발언에 대해 정부는 “양측의 합의를 통해 발표한 것”이라며 일축했다.
+      </p>
+    </article>
+
+    <div class="actions">
+      <button class="btn" type="button">수정</button>
+      <button class="btn" type="button">삭제</button>
+      <button class="btn" type="button">목록</button>
+    </div>
+
+    <section class="cmt">
+      <div class="top">
+        <h3>댓글</h3>
+        <button class="submit" id="cToggle" type="button">댓글 적기</button>
+      </div>
+
+      <div class="write">
+        <div class="row">
+          <textarea class="textbox" id="cText" placeholder="내용 (Ctrl+Enter 등록)"></textarea>
+          <button class="submit" id="cBtn" type="button">등록</button>
+        </div>
+      </div>
+
+      <table class="list">
+        <thead>
+          <tr>
+            <th>닉네임</th>
+            <th>내용</th>
+            <th>날짜</th>
+          </tr>
+        </thead>
+        <tbody id="cBody"></tbody>
+      </table>
+    </section>
+  </div>
+</main>
+
+
+<script>
+(function(){
+  const cmt=document.querySelector('.cmt');
+  const body=document.getElementById('cBody');
+  const text=document.getElementById('cText');
+  const btn=document.getElementById('cBtn');
+  const toggle=document.getElementById('cToggle');
+  const nick=(document.body.dataset.nickname||'방문자').trim();
+
+  function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+  function ymd(d){const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
+  function openBox(){if(!cmt.classList.contains('open')){cmt.classList.add('open');toggle.textContent='닫기';setTimeout(()=>text.focus(),0);}}
+  function closeBox(){if(cmt.classList.contains('open')){cmt.classList.remove('open');toggle.textContent='댓글 적기';}}
+  function submit(){const t=text.value.trim();if(!t){text.focus();return;}const tr=document.createElement('tr');const td1=document.createElement('td');td1.textContent=nick;const td2=document.createElement('td');td2.innerHTML=escapeHTML(t).replace(/\n/g,'<br>');const td3=document.createElement('td');td3.textContent=ymd(new Date());tr.append(td1,td2,td3);body.insertBefore(tr,body.firstChild);text.value='';text.focus();}
+  toggle.addEventListener('click',()=>{if(cmt.classList.contains('open'))closeBox();else openBox();});
+  btn.addEventListener('click',submit);
+  text.addEventListener('keydown',e=>{if(e.ctrlKey&&e.key==='Enter')submit();});
+})();
+</script>
+</body>
+</html>
