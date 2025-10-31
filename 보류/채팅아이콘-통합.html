@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>채팅 아이콘 통합 데모</title>
+<style>
+  /* Scope */
+  .chat, .chat *{ box-sizing:border-box; font-family: "Pretendard Variable","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif; }
+  .chat{ --ink:#000000; --muted:#6b7280; --line:#c7d2fe; --panel:#c7d2fe; --navy:#000777; color:var(--ink); }
+
+  /* Floating Icon */
+  .chat .icon{ position:fixed; top:16px; right:16px; z-index:90; width:44px; height:44px; border-radius:50%;
+    border:2px solid #111; background:#f9f9f9; display:flex; align-items:center; justify-content:center; color:#111; cursor:pointer; }
+  .chat .icon:focus{ outline:3px solid #c7d2fe; outline-offset:2px; }
+  .chat .icon[aria-expanded="true"]{ border-color:var(--navy); color:var(--navy); } /* 클릭 시 블랙 -> #000777 */
+  .chat .icon svg{ width:22px; height:22px; display:block; }
+  .chat .llx-badge{ position:absolute; top:-6px; right:-6px; min-width:20px; height:20px; padding:0 6px; border-radius:999px;
+    background:#e11d48; color:#fff; font:700 12px/20px system-ui; display:flex; align-items:center; justify-content:center; }
+
+  /* Panel */
+  .chat .llx-panel{ position:fixed; right:16px; top:64px; width:420px; max-width:92vw; height:560px;
+    border:2px solid var(--navy); border-radius:14px; background:#fff; overflow:hidden; z-index:80; }
+  .chat .tabs{ display:flex; gap:8px; padding:12px; border-bottom:1px solid #ddd; background:#fff; align-items:center; }
+  .chat .tab{ padding:10px 15px; background:#f9f9f9; border-radius:18px; font-weight:800; cursor:pointer; user-select:none; }
+  .chat .tab.is-active{ background:var(--panel); color:var(--ink); }
+  .chat .tabs .sp{ margin-left:auto; color:var(--muted); font-size:12px; }
+  .chat .list{ padding:6px 12px; background:#fafafa; height:calc(100% - 50px); overflow:auto; }
+  .chat .item{ display:flex; gap:10px; padding:12px 6px; border-bottom:1px solid #eee; background:#fff; }
+  .chat .pico{ width:44px; height:44px; border-radius:50%; background:#eee; border:1px solid #ccc; display:flex; align-items:center; justify-content:center; }
+  .chat .meta b{ display:block; }
+  .chat .meta .preview{ color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+</style>
+</head>
+<body>
+<div class="chat">
+  <!-- Icon -->
+  <button class="icon" id="llxChatBtn" aria-controls="llxChatPanel" aria-expanded="false" aria-label="채팅 목록 열기">
+    <!-- Use currentColor so icon follows border color -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20 16c0 1.1-.9 2-2 2H9l-5 4V6c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M8 8.5h8M8 11h8M8 13.5h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <span class="llx-badge" id="llxChatBadge">1</span>
+  </button>
+
+  <!-- Panel -->
+  <section class="llx-panel" id="llxChatPanel" hidden>
+    <div class="tabs" role="tablist">
+      <div class="tab is-active" data-filter="all" aria-selected="true">전체 <span id="cntAll">0</span></div>
+      <div class="tab" data-filter="live" aria-selected="false">상담중 <span id="cntLive">0</span></div>
+      <div class="tab" data-filter="wait" aria-selected="false">대기중 <span id="cntWait">0</span></div>
+      <div class="tab" data-filter="end" aria-selected="false">종료 <span id="cntEnd">0</span></div>
+      <span class="sp" id="totalLabel"></span>
+    </div>
+    <div class="list" id="llxChatList" role="list">
+      <div class="item" role="listitem" data-status="live">
+        <div class="pico">사진</div>
+        <div class="meta">
+          <b>000변호사</b>
+          <div class="preview">이 경우 절차는 다음과 같이 정리됩니다. 우선, ...</div>
+        </div>
+      </div>
+      <div class="item" role="listitem" data-status="wait">
+        <div class="pico">사진</div>
+        <div class="meta">
+          <b>%%변호사</b>
+          <div class="preview">안녕하세요. 상담의뢰드리고 싶어 연락드립니다</div>
+        </div>
+      </div>
+      <div class="item" role="listitem" data-status="end">
+        <div class="pico">사진</div>
+        <div class="meta">
+          <b>###변호사</b>
+          <div class="preview">완료했습니다. 답변 감사합니다.</div>
+        </div>
+      </div>
+      <div class="item" role="listitem" data-status="live">
+        <div class="pico">사진</div>
+        <div class="meta">
+          <b>샘플변호사</b>
+          <div class="preview">지금 통화 가능하실까요?</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var btn   = document.getElementById('llxChatBtn');
+  var panel = document.getElementById('llxChatPanel');
+  var badge = document.getElementById('llxChatBadge');
+  var tabs  = Array.prototype.slice.call(document.querySelectorAll('.chat .tab'));
+  var list  = document.getElementById('llxChatList');
+
+  if(!btn || !panel || !list) return;
+
+  function setBadge(n){
+    n = Number(n)||0;
+    if(n <= 0){ badge.style.display='none'; }
+    else{ badge.style.display=''; badge.textContent = n > 99 ? '99+' : String(n); }
+  }
+
+  function toggle(open){
+    if(open){ panel.hidden = false; btn.setAttribute('aria-expanded','true'); }
+    else{ panel.hidden = true; btn.setAttribute('aria-expanded','false'); }
+  }
+
+  function counts(){
+    var items = Array.prototype.slice.call(list.querySelectorAll('.item'));
+    var all = items.length, live=0, wait=0, end=0;
+    items.forEach(function(it){ var s = it.getAttribute('data-status'); if(s==='live') live++; else if(s==='wait') wait++; else if(s==='end') end++; });
+    document.getElementById('cntAll').textContent = all;
+    document.getElementById('cntLive').textContent = live;
+    document.getElementById('cntWait').textContent = wait;
+    document.getElementById('cntEnd').textContent  = end;
+    document.getElementById('totalLabel').textContent = '총 ' + all + '건';
+  }
+
+  function applyFilter(key){
+    Array.prototype.slice.call(list.querySelectorAll('.item')).forEach(function(it){
+      var ok = (key==='all') || (it.getAttribute('data-status')===key);
+      it.style.display = ok ? '' : 'none';
+    });
+  }
+
+  btn.addEventListener('click', function(){
+    var willOpen = panel.hidden;
+    toggle(willOpen);
+  });
+
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('is-active'); x.setAttribute('aria-selected','false'); });
+      t.classList.add('is-active'); t.setAttribute('aria-selected','true');
+      applyFilter(t.getAttribute('data-filter'));
+    });
+  });
+
+  // init
+  counts();
+  setBadge(1);
+  applyFilter('all');
+})();
+</script>
+</body>
+</html>
