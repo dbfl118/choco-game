@@ -8,14 +8,13 @@
   /* ================== Scope & Tokens ================== */
   *{ box-sizing:border-box; font-family: "Pretendard Variable","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif; }
   :root{
-    /* 통일 팔레트 (페이지 전역과 톤 맞춤) */
-    --ink:#000000;         /* 본문먹색 */
-    --muted:#6b7280;       /* 보조글자 */
-    --line:#e2e6ff;        /* 경계선 */
-    --panel:#f9faff;       /* 탭/소프트배경 */
-    --paper:#ffffff;       /* 카드/패널 바탕 */
-    --navy:#000777;        /* 브랜드 네이비 */
-    --danger:#c1121f;      /* 배지/경고 */
+    --ink:#000000;
+    --muted:#6b7280;
+    --line:#e2e6ff;
+    --panel:#f9faff;
+    --paper:#ffffff;
+    --navy:#000777;
+    --danger:#c1121f;
     color:var(--ink);
   }
   .chat{
@@ -32,14 +31,14 @@
   }
   .chat .icon[aria-expanded="true"]{ border-color:var(--navy); color:var(--navy); } /* 열림상태 네이비 */
   .chat .icon svg{ width:35px; height:35px; background-color: #ffffff; }
-  .chat .llx-badge{
+  .chat .badge{
     position:absolute; top:-6px; right:-6px; min-width:20px; height:20px; padding:0 6px;
     border-radius:999px; background:var(--danger); color:#fff;
     font:700 12px/20px system-ui; display:flex; align-items:center; justify-content:center;
   }
 
   /* ================== Panel ================== */
-  .chat .llx-panel{
+  .chat .panel{
     position:fixed; width:420px; max-width:92vw; height:560px;
     border:2px solid var(--line); border-radius:14px; background:var(--paper);
     overflow:hidden; z-index:80; box-shadow:0 6px 16px rgba(0,0,0,.06);
@@ -63,6 +62,7 @@
     width:44px; height:44px; border-radius:50%; background:#eee; border:1px solid #d9dbe8;
     display:flex; align-items:center; justify-content:center;
   }
+  .chat .meta{text-decoration: none;}
   .chat .meta b{ display:block; color:var(--ink); }
   .chat .meta .preview{ color:#334155; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
@@ -80,11 +80,11 @@
       <path d="M20 16c0 1.1-.9 2-2 2H9l-5 4V6c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
       <path d="M8 8.5h8M8 11h8M8 13.5h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
     </svg>
-    <span class="llx-badge" id="llxChatBadge">1</span>
+    <span class="badge" id="llxChatBadge">1</span>
   </button>
 
   <!-- Panel -->
-  <section class="llx-panel" id="llxChatPanel" hidden>
+  <section class="panel" id="llxChatPanel" hidden>
     <div class="tabs" role="tablist">
       <div class="tab is-active" data-filter="all" aria-selected="true">전체 <span id="cntAll">0</span></div>
       <div class="tab" data-filter="live" aria-selected="false">상담중 <span id="cntLive">0</span></div>
@@ -95,10 +95,10 @@
     <div class="list" id="llxChatList" role="list">
       <div class="item" role="listitem" data-status="live">
         <div class="pico">사진</div>
-        <div class="meta">
+        <a href="" class="meta">
           <b>000변호사</b>
           <div class="preview">이 경우 절차는 다음과 같이 정리됩니다. 우선, ...</div>
-        </div>
+        </a>
       </div>
       <div class="item" role="listitem" data-status="wait">
         <div class="pico">사진</div>
