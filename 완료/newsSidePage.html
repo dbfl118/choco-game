@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>newsSide</title>
+<style>
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'Gooorm Sans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/gooorm-sans-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+:root{ --navy:#000777; --ink:#555666; }
+/* container */
+.sideMenu{
+  position:relative; min-height:200px;
+  display:flex; flex-direction:column; align-items:flex-end; gap:10px;
+  padding:40px 15px 0 0;
+  font-family:'Gooorm Sans','Noto Sans KR',system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif;
+}
+/* items */
+.side, .side-choice{
+  display:block; text-decoration:none; color:var(--ink);
+  font-size:40px; line-height:1.1; text-align:right;
+  border-radius:6px; padding:4px 0; -webkit-tap-highlight-color:transparent;
+  cursor:pointer; outline: none;
+}
+.side:hover{ color:var(--navy); }
+.side-choice{ color:var(--navy); font-weight:700; }
+/* focus visible for keyboard users */
+.side:focus-visible, .side-choice:focus-visible{
+  outline: 2px solid var(--navy); outline-offset: 4px; border-radius:8px;
+}
+/* responsive */
+@media (max-width:980px){
+  .side, .side-choice{ font-size:35px; }
+  .sideMenu{ padding-right:10px; }
+}
+</style>
+</head>
+<body>
+  <nav class="sideMenu" data-scope="news" aria-label="소식 사이드">
+    <a href="#" class="side-choice" aria-current="page">공지사항</a>
+    <a href="#" class="side">NEWS</a>
+    <a href="#" class="side">동영상</a>
+    <a href="#" class="side">칼럼</a>
+  </nav>
+<script>
+(function(){
+  function setup(menu){
+    if(!menu) return;
+    var scope = menu.getAttribute('data-scope') || 'side';
+    var KEY = 'side.clean.activeIndex.' + scope;
+    var links = function(){ return Array.prototype.slice.call(menu.querySelectorAll('a')); };
+
+    function setActive(a){
+      var current = menu.querySelector('.side-choice');
+      if(current && current !== a){
+        current.classList.remove('side-choice');
+        current.classList.add('side');
+        current.removeAttribute('aria-current');
+      }
+      a.classList.remove('side');
+      a.classList.add('side-choice');
+      a.setAttribute('aria-current','page');
+    }
+
+    // restore saved active
+    try{
+      var saved = localStorage.getItem(KEY);
+      if(saved !== null){
+        var idx = parseInt(saved,10);
+        var items = links();
+        if(items[idx]) setActive(items[idx]);
+      }
+    }catch(e){ /* ignore storage errors */ }
+
+    // click: prevent jump for # / empty, toggle active, persist
+    menu.addEventListener('click', function(e){
+      var a = e.target.closest('a'); if(!a || !menu.contains(a)) return;
+      var href = (a.getAttribute('href')||'').trim();
+      if(href === '' || href === '#') e.preventDefault();
+      setActive(a);
+      try{
+        var idx = links().indexOf(a);
+        if(idx > -1) localStorage.setItem(KEY, String(idx));
+      }catch(e){ /* ignore */ }
+    });
+
+    // keyboard: Enter/Space to activate
+    menu.addEventListener('keydown', function(e){
+      var a = e.target.closest('a'); if(!a) return;
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        a.click();
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('.sideMenu').forEach(setup);
+  });
+})();
+</script>
+</body>
+</html>
