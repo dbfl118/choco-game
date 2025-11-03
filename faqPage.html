@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ - LawLex</title>
+  <link href="https://cdn.jsdelivr.net/gh/fonts-archive/GmarketSans/GmarketSans.css" rel="stylesheet">
+  <style>
+    @import url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/gooorm.css');
+
+    :root {
+      --ink: #000;
+      --muted: #6b7280;
+      --line: #e2e6ff;
+      --panel: #f9faff;
+      --paper: #fff;
+      --navy: #000777;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Gooorm Sans', sans-serif;
+      color: var(--ink);
+      background: #f8f9fa;
+    }
+
+    .page-faq {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: min(1200px, 100%);
+    }
+
+    /* 타이틀 섹션 */
+    .title-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .title-section h1 {
+      font-size: 48px;
+      font-weight: 700;
+    }
+
+    .inquiry-btn {
+      padding: 12px 24px;
+      background: var(--navy);
+      color: var(--paper);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .inquiry-btn:hover {
+      box-shadow: 0 4px 12px rgba(0, 7, 119, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* FAQ 아이템 */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 4px 12px rgba(0, 7, 119, 0.08);
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 30px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .question-text {
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .question-text .q-label {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .arrow {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s;
+      color: var(--muted);
+    }
+
+    .faq-item.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+    }
+
+    .answer-content {
+      padding: 0 30px 24px 30px;
+      color: var(--muted);
+      line-height: 1.8;
+      display: flex;
+      gap: 8px;
+    }
+
+    .answer-content .a-label {
+      color: var(--navy);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .title-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .title-section h1 {
+        font-size: 36px;
+      }
+
+      .question-text {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-faq">
+    <div class="container">
+      <div class="title-section">
+        <h1>FAQ</h1>
+        <button class="inquiry-btn">문의글 보기</button>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>회원가입은 어떻게 하나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>상단 메뉴에서 '회원가입'을 클릭 후 이메일/변호사 유형을 선택하여 가입할 수 있습니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>상담 글은 수정/삭제가 가능한가요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>답변이 달리기 전까지만 수정·삭제가 가능합니다. 답변이 달린 이후에는 관리자만 권한을 가집니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>포인트 충전과 사용은 어떻게 하나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>결제 페이지에서 원하는 금액을 충전한 후 포인트로 전환됩니다. 상담·채팅 서비스 이용 시 포인트가 차감됩니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>채팅 상담은 어떤 방식으로 진행되나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>당일 상담 가능한 변호사 목록에서 선택 후 입장하면, 변호사가 수락하면 1:1간 단위로 채팅이 진행됩니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>소식 페이지의 칼럼은 누가 작성할 수 있나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>변호사 회원이 직접 작성할 수 있으며, 작성자 본인만 수정/삭제 가능합니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>변호사 회원은 어떻게 등록하나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>회원가입 시 '변호사' 유형을 선택하고 변호사 자격증 및 인증 서류를 제출하면 관리자 승인 후 이용 가능합니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>작성한 문의글은 어디서 확인하나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>마이페이지 > 내가 쓴 글 메뉴에서 확인할 수 있습니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>관리자에게 신고는 어떻게 하나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>게시글/댓글 우측 상단의 '신고' 버튼을 통해 사유를 선택하여 신고할 수 있습니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>댓글 신고가 누적되면 어떻게 되나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>신고 횟수가 누적되면 관리자가 검토 후 경고, 제한, 계정 정지 등의 조치를 취할 수 있습니다. 탈퇴 시 모든 글과 기록은 삭제됩니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="question-text">
+              <span class="q-label">Q.</span>
+              <span>회원 탈퇴는 어떻게 하나요?</span>
+            </div>
+            <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            <div class="answer-content">
+              <span class="a-label">A.</span>
+              <span>마이페이지 > 회원정보수정 > 회원탈퇴 버튼을 통해 직접 진행할 수 있습니다. 탈퇴 시 모든 글과 기록은 삭제됩니다.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 아코디언 기능
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const item = question.parentElement;
+        const isActive = item.classList.contains('active');
+        
+        // 모든 아이템 닫기
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('active');
+        });
+        
+        // 클릭한 아이템만 열기 (이미 열려있던 것은 닫기)
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

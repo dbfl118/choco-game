@@ -65,33 +65,43 @@
       display: flex;
       justify-content: flex-end;
       gap: 10px;
+      margin-bottom: 10px;
     }
 
     .pickBtn {
       padding: 10px 20px;
-      border: 1px solid var(--navy);
-      color: var(--navy);
+      border:none;
+      box-shadow: inset 0 0 0 1px var(--navy);
+      color: var(--ink);
       background: #fff;
-      border-radius: 999px;
+      border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
     }
 
-    .pickBtn:hover,
-    .pickBtn.active {
+    .pickBtn-on {
+      padding: 10px 20px;
+      border: 1px solid;
+      color: var(--paper);
       background: var(--navy);
-      color: #fff;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .pickBtn:hover,.pickBtn-on:hover{
+      border: 1px solid;
+      box-shadow: 0 5px 15px rgba(0, 7, 119, .12);
+      transform: translateY(-2px);
     }
 
     /* TOP 10 */
     .tops {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 5px;
       margin-bottom: 56px;
     }
 
-    /* ★ grid로 3열: left | among(센터) | right */
     .top-1,
     .top-2,
     .top-3,
@@ -99,16 +109,30 @@
       display: grid;
       grid-template-columns: 250px auto 250px;
       align-items: center;
-      gap: 16px;
-      padding: 18px 24px;
+      gap: 10px;
+      padding: 10px 25px;
       border: 1px solid #e1e4e8;
-      border-radius: 12px;
+      border-radius: 10px;
       background: #fff;
       transition: .2s;
     }
-
-    .rank-item:hover {
-      box-shadow: 0 6px 14px rgba(0, 7, 119, .12);
+    .top{
+      height: 100px;
+    }
+    .top-1 .name{
+      font-size: 40px;
+    }
+    .top-2 .name{
+      font-size: 35px;
+    }
+    .top-3 .name{
+      font-size: 30px;
+    }
+    .top:hover,
+    .top-1:hover,
+    .top-2:hover,
+    .top-3:hover{
+      box-shadow: 0 5px 15px rgba(0, 7, 119, .12);
       transform: translateY(-2px);
     }
 
@@ -135,23 +159,24 @@
     }
 
     .num {
+      display: flex;
+      justify-content: center;
       min-width: 48px;
       font-weight: 800;
       color: var(--navy);
     }
-
+    .top-1 .num, .top-2 .num, .top-3 .num{
+      font-size: 30px;
+    }
     .top-1 .num {
-      font-size: 28px;
       color: #FFD700;
     }
 
     .top-2 .num {
-      font-size: 26px;
       color: #c1cfd4;
     }
 
     .top-3 .num {
-      font-size: 24px;
       color: #fdb15b;
     }
 
@@ -211,7 +236,7 @@
     }
 
     .category-group {
-      margin: 22px 0 34px;
+      margin: 50px 0px;
     }
 
     .category-title {
@@ -290,7 +315,7 @@
       </div>
 
       <div class="filter-buttons">
-        <button class="pickBtn">좋아요순</button>
+        <button class="pickBtn-on">좋아요순</button>
         <button class="pickBtn">답변수순</button>
       </div>
 

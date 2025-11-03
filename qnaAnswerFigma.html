@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문의 답변 - LawLex</title>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/GmarketSansMedium.woff');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'GmarketSansMedium', sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .qna-answer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .content-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* 문의글 정보 */
+    .qna-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+    }
+
+    .qna-info-left {
+      display: flex;
+      gap: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 5px;
+    }
+
+    .info-label {
+      color: #333;
+      font-weight: 500;
+    }
+
+    .qna-info-right {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* 제목 섹션 */
+    .title-section {
+      padding: 20px 0;
+      border-bottom: 2px solid #000777;
+      margin-bottom: 30px;
+    }
+
+    .title-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .title-label {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .secret-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background-color: #f5f5f5;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .public-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background-color: #e8f4ff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #000777;
+    }
+
+    .lock-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .title-text {
+      font-size: 18px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* 문의 내용 */
+    .content-section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .content-box {
+      min-height: 200px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #fafafa;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    /* 답변 섹션 */
+    .answer-section {
+      margin-bottom: 30px;
+    }
+
+    .answer-textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'GmarketSansMedium', sans-serif;
+      font-size: 14px;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s;
+      line-height: 1.6;
+    }
+
+    .answer-textarea:focus {
+      border-color: #000777;
+    }
+
+    .answer-textarea::placeholder {
+      color: #999;
+    }
+
+    /* 버튼 영역 */
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'GmarketSansMedium', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .btn-delete:hover {
+      background-color: #c82333;
+    }
+
+    .btn-submit {
+      background-color: #000777;
+      color: white;
+    }
+
+    .btn-submit:hover {
+      background-color: #000555;
+    }
+
+    @media (max-width: 768px) {
+      .qna-answer-container {
+        padding: 40px 15px;
+      }
+
+      .qna-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .qna-info-left {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .title-text {
+        font-size: 16px;
+      }
+
+      .content-box {
+        min-height: 150px;
+        padding: 15px;
+      }
+
+      .answer-textarea {
+        min-height: 120px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="qna-answer-container">
+    <div class="content-wrapper">
+      <!-- 문의글 정보 -->
+      <div class="qna-info">
+        <div class="qna-info-left">
+          <div class="info-item">
+            <span class="info-label">글쓴이:</span>
+            <span id="authorName">홍길동</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">분야 제목:</span>
+            <span id="categoryName">회원 문의</span>
+          </div>
+        </div>
+        <div class="qna-info-right" id="createdDate">
+          2025-11-03
+        </div>
+      </div>
+
+      <!-- 제목 섹션 -->
+      <div class="title-section">
+        <div class="title-header">
+          <span class="title-label">□ 제목</span>
+          <span class="secret-badge" id="secretBadge" style="display: none;">
+            <svg class="lock-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+            </svg>
+            비밀글
+          </span>
+          <span class="public-badge" id="publicBadge" style="display: none;">
+            <svg class="lock-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+            </svg>
+            공개글
+          </span>
+        </div>
+        <div class="title-text" id="titleText">문의 내용</div>
+      </div>
+
+      <!-- 문의 내용 -->
+      <div class="content-section">
+        <div class="section-title">문의 내용</div>
+        <div class="content-box" id="contentBox">
+          회원가입 시 인증메일이 오지 않습니다. 확인 부탁드립니다.
+        </div>
+      </div>
+
+      <!-- 답변 달기 -->
+      <div class="answer-section">
+        <div class="section-title">답변 달기</div>
+        <textarea 
+          class="answer-textarea" 
+          placeholder="답변 내용"
+          id="answerTextarea"
+        ></textarea>
+      </div>
+
+      <!-- 버튼 -->
+      <div class="action-buttons">
+        <button class="btn btn-delete" id="deleteBtn">삭제하기</button>
+        <button class="btn btn-submit" id="submitBtn">답변하기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mock data - 실제 환경에서는 서버에서 받아온 데이터를 사용
+    const qnaData = {
+      author: '홍길동',
+      category: '회원 문의',
+      date: '2025-11-03',
+      title: '회원가입 인증메일 문의',
+      content: '회원가입 시 인증메일이 오지 않습니다. 확인 부탁드립니다.',
+      isSecret: true  // true: 비밀글, false: 공개글
+    };
+
+    // Textarea 자동 높이 조절
+    const answerTextarea = document.getElementById('answerTextarea');
+    
+    function autoResize(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    answerTextarea.addEventListener('input', function() {
+      autoResize(this);
+    });
+
+    // 페이지 로드 시 데이터 표시
+    window.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('authorName').textContent = qnaData.author;
+      document.getElementById('categoryName').textContent = qnaData.category;
+      document.getElementById('createdDate').textContent = qnaData.date;
+      document.getElementById('titleText').textContent = qnaData.title;
+      document.getElementById('contentBox').textContent = qnaData.content;
+
+      // 공개글/비밀글 뱃지 표시
+      if (qnaData.isSecret) {
+        document.getElementById('secretBadge').style.display = 'inline-flex';
+        document.getElementById('publicBadge').style.display = 'none';
+      } else {
+        document.getElementById('secretBadge').style.display = 'none';
+        document.getElementById('publicBadge').style.display = 'inline-flex';
+      }
+
+      // 초기 높이 설정
+      autoResize(answerTextarea);
+    });
+
+    // 답변 제출
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('click', function() {
+      const answer = document.getElementById('answerTextarea').value.trim();
+      
+      if (!answer) {
+        alert('답변 내용을 입력해주세요.');
+        return;
+      }
+
+      console.log('답변 제출:', answer);
+      alert('답변이 등록되었습니다.');
+      // Navigate to QnA list page
+    });
+
+    // 삭제
+    const deleteBtn = document.getElementById('deleteBtn');
+    deleteBtn.addEventListener('click', function() {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        console.log('문의글 삭제');
+        alert('삭제되었습니다.');
+        // Navigate to QnA list page
+      }
+    });
+  </script>
+</body>
+</html>
