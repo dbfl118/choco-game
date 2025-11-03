@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>일반회원채팅</title>
+<style>
+*{ box-sizing:border-box; font-family:"Pretendard Variable","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif; }
+:root{ --ink:#000000; --muted:#6b7280; --line:#e2e6ff; --paper:#ffffff; --panel:#f3f7ff; --navy:#000777; --danger:#c1121f; color:var(--ink); }
+.page-gChating{display: flex; justify-content: center; margin: 50px 0;}
+
+.page-gChating .container{ width:min(800px,94%);}
+.page-gChating .room{ background:#eaf1ff; border:1px solid #cfe0ff; height:1000px; position:relative; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
+.page-gChating .head{ display:flex; align-items:flex-start; gap:12px; background:#dfebff; border-bottom:1px solid #cfe0ff; padding:12px 16px; font-weight:800; }
+.page-gChating .pic{ width:100px; height:100px; border:1px solid #bbb; background:#eee; display:flex; align-items:center; justify-content:center; border-radius:6px; font-weight:900; color:#333; }
+.page-gChating .info .name{ font-size:22px; font-weight:900; letter-spacing:-0.3px; }
+.page-gChating .info .timewin{ font-size:12px; color:#475569; margin-top:2px; }
+.page-gChating .head .badges{ margin-left:auto; display:flex; gap:8px; align-items:center; }
+.page-gChating .head .remain{ background:var(--danger); color:#fff; font-weight:800; font-size:12px; padding:6px 10px; border-radius:999px; }
+
+.page-gChating .msgs{ flex:1 1 auto; overflow:auto; padding:18px; background:var(--paper); }
+.page-gChating .daychip{ display:inline-block; padding:5px 10px; border-radius:999px; background:#cfd7eb; color:#fff; font-size:12px; font-weight:800; }
+.page-gChating .divider-wrap{ display:flex; align-items:center; gap:12px; color:#94a3b8; margin:18px 0; }
+.page-gChating .divider-wrap .rule{ flex:1; height:1px; background:#e5e7eb; }
+
+/* 말풍선 */
+.page-gChating .msg-row{ display:flex; gap:8px; margin:10px 0; align-items:flex-end; }
+.page-gChating .msg-row.lawyer{ justify-content:flex-start; }
+.page-gChating .msg-row.user{ justify-content:flex-end; }
+
+/* 받는 쪽(상대) */
+.page-gChating .lawyer .bubble{ background:#f3f6ff; border:1px solid #c7d2fe; color:var(--ink); }
+/* 내가 보내는 쪽(하양) */
+.page-gChating .user .bubble{ background:#ffffff; border:1px solid #e2e8f0; color:#0f172a; }
+
+.page-gChating .bubble{ max-width:min(70%,520px); padding:10px 14px; border-radius:16px; font-size:15px; line-height:1.45; position:relative; }
+.page-gChating .meta{ font-size:11px; color:#64748b; margin:0 6px; white-space:nowrap; }
+.page-gChating .user .meta{ order:-1; }
+
+/* 이미지 전송: 버블 없이 타일 */
+.page-gChating .media{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; max-width:min(70%,520px); }
+.page-gChating .media img{ width:100%; height:180px; object-fit:cover; border-radius:12px; border:none; background:transparent; cursor:zoom-in; }
+
+/* 입력 영역 */
+.page-gChating .dock{ border-top:1px solid #cfe0ff; background:#eaf1ff; padding:8px 10px; }
+.page-gChating .previews{ display:flex; flex-wrap:wrap; gap:8px; padding:6px 2px 10px; }
+.page-gChating .chip{ position:relative; width:74px; height:74px; border-radius:10px; overflow:hidden; border:1px solid #c2d5f0; background:#fff; }
+.page-gChating .chip img{ width:100%; height:100%; object-fit:cover; display:block; }
+.page-gChating .chip button{ position:absolute; top:4px; right:4px; width:22px; height:22px; border:none; background:rgba(0,0,0,.55); color:#fff; border-radius:50%; cursor:pointer; font-weight:900; line-height:22px; font-size:12px; }
+.page-gChating .inputbar{ display:flex; gap:10px; align-items:flex-start; }
+.page-gChating .toolbar{ display:flex; gap:8px; align-items:center; padding-bottom:2px; }
+.page-gChating .icon-btn{ width:50px; height:50px; display:inline-flex; align-items:center; justify-content:center; border:1px solid #c2d5f0; background:#fff; border-radius:8px; cursor:pointer; }
+.page-gChating .icon-btn:focus{ outline:3px solid rgba(0,7,119,.25); outline-offset:1px; }
+.page-gChating .few{ flex:1; height:100px; padding:10px; border:1px solid #c2d5f0; outline:none; background:#fff; border-radius:8px; font-size:15px; resize:none; }
+.page-gChating .send{ background:var(--navy); color:#fff; border:none; border-radius:8px; width:92px; font-weight:800; cursor:pointer; height:40px; }
+.page-gChating .send:disabled{ background:var(--navy); }
+
+/* 스크롤바 */
+.page-gChating .msgs::-webkit-scrollbar{ width:10px; }
+.page-gChating .msgs::-webkit-scrollbar-thumb{ background:#d7dbf9; border-radius:8px; border:2px solid #f1f3ff; }
+.page-gChating .msgs::-webkit-scrollbar-track{ background:#f7f8ff; }
+
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+/* 라이트박스 */
+.page-gChating .viewer{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; z-index:9999; }
+.page-gChating .viewer[aria-hidden="false"]{ display:block; }
+.page-gChating .viewer .stage{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:2vh; overflow:auto; }
+.page-gChating .viewer img{ max-width:96vw; max-height:96vh; border-radius:10px; }
+.page-gChating .viewer.fit-off img{ max-width:none; max-height:none; }
+.page-gChating .viewer .ctrl{ position:absolute; top:10px; right:12px; display:flex; gap:8px; }
+.page-gChating .viewer .ctrl button{ background:#111827; color:#fff; border:none; border-radius:8px; padding:8px 10px; cursor:pointer; font-weight:800; font-size:13px; }
+.page-gChating .viewer .arrow{ position:absolute; top:50%; transform:translateY(-50%); background:transparent; border:none; cursor:pointer; font-size:34px; line-height:1; color:#fff; padding:6px 10px; }
+.page-gChating .viewer .prev{ left:10px; } .page-gChating .viewer .next{ right:10px; }
+.page-gChating .viewer .arrow:disabled{ opacity:.25; cursor:default; }
+</style>
+</head>
+<body>
+<main class="page-gChating">
+  <div class="container">
+    <section class="room" aria-label="채팅방">
+      <header class="head">
+        <img src="" class="pic" alt="프로필">
+        <div class="info"><div class="name">000변호사</div><div class="timewin">상담가능시간 : 월,수 오전 11:00 - 오후 5:00</div></div>
+        <div class="badges"><span class="remain" id="remainTime">남은시간 14:22</span></div>
+      </header>
+
+      <div class="msgs" id="msgs">
+        <div style="text-align:center; margin:8px 0 2px;"><span class="daychip">10.13 (월)</span></div>
+        <div class="msg-row lawyer"><div class="bubble">안녕하세요 ***님. 어떤 내용으로 도와드릴까요?</div><div class="meta">오후 12:41</div></div>
+        <div class="divider-wrap"><div class="rule"></div>여기까지 읽었습니다<div class="rule"></div></div>
+        <div class="msg-row user"><div class="meta">오후 1:41</div><div class="bubble">안녕하세요 변호사님</div></div>
+      </div>
+
+      <div class="dock">
+        <div class="previews" id="previews" aria-live="polite"></div>
+        <div class="inputbar">
+          <div class="toolbar">
+            <button class="icon-btn" id="btnUpload" title="사진 올리기" aria-label="사진 올리기">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7a2 2 0 0 1 2-2h2.5l1-1h5l1 1H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z" fill="none" stroke="#5160a7" stroke-width="1.6" stroke-linejoin="round" />
+                <circle cx="12" cy="13" r="3" fill="none" stroke="#5160a7" stroke-width="1.6" />
+                <path d="M12 8v-3M10.5 6.5h3" stroke="#5160a7" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+            </button>
+            <input type="file" id="fileUpload" class="sr-only" accept="image/*" multiple>
+          </div>
+          <textarea class="few" id="inputMsg" placeholder="메시지를 입력하세요"></textarea>
+          <button class="send" id="btnSend">보내기</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Lightbox Viewer -->
+  <aside class="viewer" id="viewer" aria-hidden="true" aria-label="이미지 뷰어">
+    <div class="stage"><img id="viewerImg" alt="원본 이미지" /></div>
+    <div class="ctrl">
+      <button type="button" id="btnFit">100%</button>
+      <button type="button" id="btnClose">닫기</button>
+    </div>
+    <button type="button" class="arrow prev" id="btnPrev" aria-label="이전">‹</button>
+    <button type="button" class="arrow next" id="btnNext" aria-label="다음">›</button>
+  </aside>
+</main>
+
+<script>
+(function(){
+  var scope=document.querySelector('.page-gChating');
+  var msgs=scope.querySelector('#msgs'), input=scope.querySelector('#inputMsg'), send=scope.querySelector('#btnSend');
+  var upBtn=scope.querySelector('#btnUpload'), fileInput=scope.querySelector('#fileUpload'), previews=scope.querySelector('#previews');
+  var pending=[]; function uid(){ return 'f'+Math.random().toString(36).slice(2,9); }
+  function scrollBottom(){ msgs.scrollTop=msgs.scrollHeight; }
+  function setSendDisabled(){ send.disabled=false; }
+
+  function addPreview(file){
+    var id=uid(), url=URL.createObjectURL(file); pending.push({file:file, url:url, id:id});
+    var chip=document.createElement('div'); chip.className='chip'; chip.dataset.id=id;
+    var img=document.createElement('img'); img.src=url; img.alt='선택한 이미지 미리보기';
+    var close=document.createElement('button'); close.type='button'; close.setAttribute('aria-label','삭제'); close.textContent='×';
+    close.addEventListener('click', function(){ removePreview(id); });
+    chip.appendChild(img); chip.appendChild(close); previews.appendChild(chip);
+  }
+  function removePreview(id){
+    var idx=pending.findIndex(function(x){return x.id===id;}); if(idx>=0){ URL.revokeObjectURL(pending[idx].url); pending.splice(idx,1); }
+    var chip=previews.querySelector('.chip[data-id="'+id+'"]'); if(chip){ chip.remove(); } setSendDisabled();
+  }
+  function clearPreviews(){ pending.forEach(function(p){ URL.revokeObjectURL(p.url); }); pending=[]; previews.innerHTML=''; }
+
+  function addMyMessage(text, images){
+    if(!text && (!images || images.length===0)){ return; }
+    var row=document.createElement('div'); row.className='msg-row user';
+    var meta=document.createElement('div'); meta.className='meta';
+    var now=new Date(), hh=String(now.getHours()).padStart(2,'0'), mm=String(now.getMinutes()).padStart(2,'0');
+    meta.textContent=hh+':'+mm+(images&&images.length?' · 이미지':'');
+    row.appendChild(meta);
+
+    if(images && images.length){
+      var media=document.createElement('div'); media.className='media';
+      images.forEach(function(src){ var im=document.createElement('img'); im.src=src; im.alt='전송 이미지'; media.appendChild(im); });
+      row.appendChild(media);
+    }
+    if(text){
+      var bubble=document.createElement('div'); bubble.className='bubble';
+      var p=document.createElement('div'); p.textContent=text; bubble.appendChild(p);
+      row.appendChild(bubble);
+    }
+    msgs.appendChild(row); scrollBottom();
+  }
+
+  input.addEventListener('input', setSendDisabled);
+  send.addEventListener('click', function(){
+    var t=(input.value||'').trim(), imgs=pending.map(function(p){return p.url;});
+    addMyMessage(t, imgs); input.value=''; clearPreviews(); setSendDisabled();
+  });
+  input.addEventListener('keydown', function(e){ if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){ send.click(); }});
+  upBtn.addEventListener('click', function(){ fileInput.click(); });
+  fileInput.addEventListener('change', function(){
+    if(fileInput.files && fileInput.files.length){ var max=6; Array.from(fileInput.files).slice(0,max-pending.length).forEach(addPreview); setSendDisabled(); fileInput.value=''; }
+  });
+
+  // 라이트박스
+  var viewer=scope.querySelector('#viewer'), vImg=scope.querySelector('#viewerImg');
+  var btnClose=scope.querySelector('#btnClose'), btnFit=scope.querySelector('#btnFit');
+  var btnPrev=scope.querySelector('#btnPrev'), btnNext=scope.querySelector('#btnNext');
+  var group=[], idx=-1, fit=true;
+
+  function openViewer(images, startIndex){
+    group=images; idx=startIndex; fit=true; viewer.classList.remove('fit-off'); btnFit.textContent='100%';
+    viewer.setAttribute('aria-hidden','false'); updateViewer();
+  }
+  function closeViewer(){
+    viewer.setAttribute('aria-hidden','true'); vImg.src=''; group=[]; idx=-1;
+  }
+  function updateViewer(){
+    vImg.src=group[idx]; btnPrev.disabled=(idx<=0); btnNext.disabled=(idx>=group.length-1);
+  }
+  function toggleFit(){
+    fit=!fit; if(fit){ viewer.classList.remove('fit-off'); btnFit.textContent='100%'; }
+    else{ viewer.classList.add('fit-off'); btnFit.textContent='맞춤'; }
+  }
+
+  msgs.addEventListener('click', function(e){
+    var t=e.target;
+    if(t.tagName==='IMG' && t.closest('.media')){
+      var tiles=Array.prototype.slice.call(t.closest('.media').querySelectorAll('img')).map(function(img){ return img.src; });
+      var start=tiles.indexOf(t.src);
+      openViewer(tiles, Math.max(0,start));
+    }
+  });
+  btnClose.addEventListener('click', closeViewer);
+  btnFit.addEventListener('click', toggleFit);
+  btnPrev.addEventListener('click', function(){ if(idx>0){ idx--; updateViewer(); }});
+  btnNext.addEventListener('click', function(){ if(idx<group.length-1){ idx++; updateViewer(); }});
+  viewer.addEventListener('click', function(e){ if(e.target===viewer || e.target.classList.contains('stage')) closeViewer(); });
+
+  document.addEventListener('keydown', function(e){
+    if(viewer.getAttribute('aria-hidden')==='true') return;
+    if(e.key==='Escape') closeViewer();
+    else if(e.key==='ArrowLeft' && idx>0){ idx--; updateViewer(); }
+    else if(e.key==='ArrowRight' && idx<group.length-1){ idx++; updateViewer(); }
+    else if(e.key==='f' || e.key==='F'){ toggleFit(); }
+  });
+
+  scrollBottom();
+})();
+</script>
+</body>
+</html>
