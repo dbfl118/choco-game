@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문의 - LawLex</title>
+  <style>
+    @font-face{
+      font-family:'GmarketSansMedium';
+      src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/GmarketSansMedium.woff') format('woff');
+      font-weight:400;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    .page-gnaList *{ margin:0; padding:0; box-sizing:border-box; }
+
+    .page-gnaList{
+      font-family:'GmarketSansMedium', 'Pretendard Variable', 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, sans-serif;
+      background-color:#ffffff;
+      color:#333;
+      line-height:1.6;
+      --navy:#000777;
+      --gold:#FFD700;
+      --line:#ddd;
+      --muted:#999;
+      --panel:#f8f9fa;
+      --hover:#f0f0f0;
+    }
+
+    .page-gnaList .qna-container{
+      max-width:1200px;
+      margin:0 auto;
+      padding:60px 20px;
+    }
+
+    .page-gnaList .qna-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:30px;
+      gap:16px;
+    }
+
+    .page-gnaList .search-wrapper{ flex:1; max-width:400px; }
+    .page-gnaList .search-box{ position:relative; width:100%; }
+    .page-gnaList .search-icon{
+      position:absolute; left:12px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; color:#666;
+    }
+
+    .page-gnaList .search-input{
+      width:100%;
+      padding:10px 12px 10px 40px;
+      border:1px solid var(--line);
+      border-bottom:2px solid var(--gold);
+      background-color:#FFFEF0;
+      font-size:14px;
+      outline:none;
+    }
+    .page-gnaList .search-input::placeholder{ color:#999; }
+
+    .page-gnaList .my-posts-btn{
+      padding:10px 20px;
+      background-color:var(--navy);
+      color:#fff;
+      border:none;
+      border-radius:4px;
+      font-size:14px;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .page-gnaList .my-posts-btn:hover{ background-color:#000555; }
+
+    .page-gnaList .qna-table-wrapper{
+      background-color:#fff;
+      border:1px solid var(--line);
+      border-radius:8px;
+      overflow:hidden;
+      margin-bottom:30px;
+    }
+
+    .page-gnaList .qna-table{ width:100%; border-collapse:collapse; }
+    .page-gnaList .qna-table thead{
+      background-color:var(--panel);
+      border-bottom:2px solid var(--navy);
+    }
+    .page-gnaList .qna-table th{
+      padding:16px 12px;
+      text-align:center;
+      font-weight:500;
+      font-size:14px;
+      color:#333;
+    }
+    .page-gnaList .qna-table th:nth-child(1){ width:80px; }
+    .page-gnaList .qna-table th:nth-child(2){ width:auto; text-align:left; }
+    .page-gnaList .qna-table th:nth-child(3){ width:100px; }
+    .page-gnaList .qna-table th:nth-child(4){ width:120px; }
+
+    .page-gnaList .qna-table tbody tr{
+      border-bottom:1px solid #eee;
+      transition:background-color .2s;
+    }
+    .page-gnaList .qna-table tbody tr:hover{ background-color:var(--panel); }
+    .page-gnaList .qna-table tbody tr:last-child{ border-bottom:none; }
+
+    .page-gnaList .qna-table td{
+      padding:16px 12px;
+      text-align:center;
+      font-size:14px;
+      color:#666;
+    }
+    .page-gnaList .qna-table td:nth-child(2){ text-align:left; }
+
+    .page-gnaList .title-cell{ display:flex; align-items:center; gap:8px; }
+    .page-gnaList .lock-icon{ width:16px; height:16px; color:#999; flex-shrink:0; }
+    .page-gnaList .title-text{ color:#333; cursor:pointer; }
+    .page-gnaList .title-text:hover{ color:var(--navy); text-decoration:underline; }
+    .page-gnaList .secret-text{ color:#999; font-style:italic; }
+    .page-gnaList .check-icon{ width:20px; height:20px; color:#28a745; }
+
+    .page-gnaList .pagination{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+      margin-bottom:30px;
+      flex-wrap:wrap;
+    }
+    .page-gnaList .page-arrow{
+      width:24px; height:24px; color:#999; cursor:pointer; transition:color .2s;
+    }
+    .page-gnaList .page-arrow:hover{ color:var(--navy); }
+    .page-gnaList .page-arrow.disabled{ color:#ddd; cursor:not-allowed; }
+
+    .page-gnaList .page-number{
+      min-width:32px; height:32px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:14px; color:#666; cursor:pointer; border-radius:4px;
+      transition:all .2s;
+    }
+    .page-gnaList .page-number:hover{ background-color:var(--hover); color:var(--navy); }
+    .page-gnaList .page-number.active{ background-color:var(--navy); color:#fff; font-weight:500; }
+
+    .page-gnaList .qna-footer{ display:flex; justify-content:flex-end; }
+    .page-gnaList .write-btn{
+      padding:12px 30px;
+      background-color:var(--navy);
+      color:#fff;
+      border:none;
+      border-radius:4px;
+      font-size:14px;
+      cursor:pointer;
+    }
+    .page-gnaList .write-btn:hover{ background-color:#000555; }
+
+    @media (max-width:768px){
+      .page-gnaList .qna-container{ padding:40px 15px; }
+      .page-gnaList .qna-header{ flex-direction:column; gap:15px; align-items:stretch; }
+      .page-gnaList .search-wrapper{ max-width:100%; }
+      .page-gnaList .qna-table th:nth-child(1),
+      .page-gnaList .qna-table td:nth-child(1){ display:none; }
+      .page-gnaList .qna-table th,
+      .page-gnaList .qna-table td{ padding:12px 8px; font-size:13px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-gnaList">
+    <div class="qna-container">
+      <div class="qna-header">
+        <div class="search-wrapper">
+          <div class="search-box">
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" class="search-input" placeholder="검색" aria-label="문의 검색">
+          </div>
+        </div>
+        <button class="my-posts-btn" type="button">나의 작성글만 보기</button>
+      </div>
+
+      <div class="qna-table-wrapper">
+        <table class="qna-table">
+          <thead>
+            <tr>
+              <th scope="col">번호</th>
+              <th scope="col">문의 제목</th>
+              <th scope="col">답변여부</th>
+              <th scope="col">작성일자</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <div class="title-cell">
+                  <svg class="lock-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span class="secret-text">비밀글 입니다</span>
+                </div>
+              </td>
+              <td>
+                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td>
+                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td>
+                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td></td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td></td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td></td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td></td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td></td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td></td>
+              <td>2025-12-24</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td><div class="title-cell"><span class="title-text">문의 제목</span></div></td>
+              <td></td>
+              <td>2025-12-24</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination" role="navigation" aria-label="페이지네이션">
+        <svg class="page-arrow disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <div class="page-number active">1</div>
+        <div class="page-number">2</div>
+        <div class="page-number">3</div>
+        <div class="page-number">4</div>
+        <div class="page-number">5</div>
+        <div class="page-number">6</div>
+        <div class="page-number">7</div>
+        <div class="page-number">8</div>
+        <div class="page-number">9</div>
+        <div class="page-number">10</div>
+        <svg class="page-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </div>
+
+      <div class="qna-footer">
+        <button class="write-btn" type="button">문의 글쓰기</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const rootEl=document.querySelector('.page-gnaList');
+
+    const searchInput=rootEl.querySelector('.search-input');
+    searchInput.addEventListener('keydown',function(e){
+      if(e.key==='Enter'){
+        const searchTerm=this.value.trim();
+        if(searchTerm){ console.log('Searching for:',searchTerm); }
+      }
+    });
+
+    const myPostsBtn=rootEl.querySelector('.my-posts-btn');
+    myPostsBtn.addEventListener('click',function(){
+      console.log('Show only my posts');
+    });
+
+    rootEl.querySelectorAll('.title-text').forEach(title=>{
+      title.addEventListener('click',function(){
+        console.log('Navigate to QnA detail page');
+      });
+    });
+
+    let currentPage=1;
+    const pageNumbers=rootEl.querySelectorAll('.page-number');
+    pageNumbers.forEach(pageNum=>{
+      pageNum.addEventListener('click',function(){
+        const page=parseInt(this.textContent,10);
+        currentPage=page;
+        pageNumbers.forEach(p=>p.classList.remove('active'));
+        this.classList.add('active');
+        console.log('Navigate to page:',page);
+      });
+    });
+
+    rootEl.querySelectorAll('.page-arrow:not(.disabled)').forEach(arrow=>{
+      arrow.addEventListener('click',function(){
+        console.log('Navigate to page');
+      });
+    });
+
+    const writeBtn=rootEl.querySelector('.write-btn');
+    writeBtn.addEventListener('click',function(){
+      console.log('Navigate to QnA write page');
+    });
+  </script>
+</body>
+</html>
