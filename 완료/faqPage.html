@@ -7,11 +7,10 @@
   <title>FAQ - LawLex</title>
   <link href="https://cdn.jsdelivr.net/gh/fonts-archive/GmarketSans/GmarketSans.css" rel="stylesheet">
   <style>
-    @import url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/gooorm.css');
 
     :root {
       --ink: #000;
-      --muted: #6b7280;
+      --muted: #555666;
       --line: #e2e6ff;
       --panel: #f9faff;
       --paper: #fff;
@@ -24,47 +23,43 @@
       box-sizing: border-box;
     }
 
-    body {
-      font-family: 'Gooorm Sans', sans-serif;
-      color: var(--ink);
-      background: #f8f9fa;
-    }
-
     .page-faq {
       display: flex;
       justify-content: center;
-      padding: 40px 20px;
     }
 
     .container {
-      width: min(1200px, 100%);
+      width: min(950px, 100%);
+      margin: 50px 0px;
     }
 
-    /* 타이틀 섹션 */
-    .title-section {
+    .title {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
-    .title-section h1 {
-      font-size: 48px;
+    .title h1 {
+      font-size: 50px;
       font-weight: 700;
     }
 
-    .inquiry-btn {
-      padding: 12px 24px;
-      background: var(--navy);
-      color: var(--paper);
+    .qnaBtn {
+      padding: 5px 15px;
+      background: var(--line);
+      color: var(--ink);
       border: none;
       border-radius: 8px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
+      text-decoration: none;
     }
 
-    .inquiry-btn:hover {
+    .qnaBtn:hover {
+      background-color: var(--navy);
+      color: var(--paper);
       box-shadow: 0 4px 12px rgba(0, 7, 119, 0.3);
       transform: translateY(-2px);
     }
@@ -73,7 +68,7 @@
     .faq-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 5px;
     }
 
     .faq-item {
@@ -146,13 +141,13 @@
     }
 
     @media (max-width: 768px) {
-      .title-section {
+      .title {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
       }
 
-      .title-section h1 {
+      .title h1 {
         font-size: 36px;
       }
 
@@ -166,9 +161,9 @@
 <body>
   <main class="page-faq">
     <div class="container">
-      <div class="title-section">
+      <div class="title">
         <h1>FAQ</h1>
-        <button class="inquiry-btn">문의글 보기</button>
+        <a href="" class="qnaBtn">문의글 보기</a>
       </div>
 
       <div class="faq-list">
@@ -185,7 +180,7 @@
           <div class="faq-answer">
             <div class="answer-content">
               <span class="a-label">A.</span>
-              <span>상단 메뉴에서 '회원가입'을 클릭 후 이메일/변호사 유형을 선택하여 가입할 수 있습니다.</span>
+              <span>상단 메뉴에서 '회원가입'을 클릭 후 일반회원/변호사회원 유형을 선택하여 가입할 수 있습니다.</span>
             </div>
           </div>
         </div>
@@ -221,7 +216,7 @@
           <div class="faq-answer">
             <div class="answer-content">
               <span class="a-label">A.</span>
-              <span>결제 페이지에서 원하는 금액을 충전한 후 포인트로 전환됩니다. 상담·채팅 서비스 이용 시 포인트가 차감됩니다.</span>
+              <span>결제 페이지에서 원하는 금액을 충전한 후 포인트로 전환됩니다. 채팅 서비스 이용 시 포인트가 차감됩니다.</span>
             </div>
           </div>
         </div>
@@ -239,7 +234,7 @@
           <div class="faq-answer">
             <div class="answer-content">
               <span class="a-label">A.</span>
-              <span>당일 상담 가능한 변호사 목록에서 선택 후 입장하면, 변호사가 수락하면 1:1간 단위로 채팅이 진행됩니다.</span>
+              <span>당일 상담 가능한 변호사 선택 후 입장하면, 변호사가 수락하면 1:1간 단위로 채팅이 진행됩니다.</span>
             </div>
           </div>
         </div>
@@ -347,7 +342,7 @@
           <div class="faq-answer">
             <div class="answer-content">
               <span class="a-label">A.</span>
-              <span>마이페이지 > 회원정보수정 > 회원탈퇴 버튼을 통해 직접 진행할 수 있습니다. 탈퇴 시 모든 글과 기록은 삭제됩니다.</span>
+              <span>마이페이지 > 회원정보수정 > 회원탈퇴 버튼을 통해 직접 진행할 수 있습니다.</span>
             </div>
           </div>
         </div>
